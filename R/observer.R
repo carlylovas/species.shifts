@@ -78,7 +78,7 @@ pull_observer <- function(proj_path){
 
 }
 
-observer <- pull_observer(proj_path = proj_path)
+# observer <- pull_observer(proj_path = proj_path)
 
 ## Plot ###################################
 #' @title Plot observer data

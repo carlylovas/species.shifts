@@ -16,6 +16,6 @@ Data frame of observer data; contains both catch and haul information.
 Function to pull and clean NOAA Fisheries Observer data from pre-existing confidential repository.
 }
 \examples{
-# not run
+# observer <- pull_observer(proj_path = "~Documents/obs_dat.xlsx")
 
 }
