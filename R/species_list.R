@@ -10,6 +10,7 @@
 #' @export
 #'
 #' @examples mid_atlantic_species(source = "all")
+#'
 mid_atlantic_species <- function(source = "all") {
 
   data_sources <- c("all", "landings", "mrip", "observer", "permits", "nefsc", "vtr")
@@ -23,7 +24,8 @@ mid_atlantic_species <- function(source = "all") {
     "chub mackerel", "king mackerel", "monkfish", "scup", "spiny dogfish", "summer flounder",
     "tilefish", "atlantic croaker", "striped bass", "gray triggerfish", "spanish mackerel"
   )) |>
-    dplyr::mutate(clean_name = comname, source = "mrip")
+    dplyr::mutate(clean_name = comname,
+                  data_source = "mrip")
 
   landings <- data.frame(comname = c(
     "atlantic mackerel", "black sea bass", "bluefish", "blueline tilefish", "butterfish",
@@ -39,7 +41,7 @@ mid_atlantic_species <- function(source = "all") {
         comname == "goosefish"             ~ "monkfish",
         .default = comname
       ),
-      source = "landings"
+      data_source = "landings"
     )
 
   vtr <- data.frame(comname = c(
@@ -56,7 +58,7 @@ mid_atlantic_species <- function(source = "all") {
         comname == "squid / loligo" ~ "longfin squid",
         .default = clean_name
       ),
-      source = "vtr"
+      data_source = "vtr"
     )
 
   trawl <- data.frame(comname = c(
@@ -65,7 +67,8 @@ mid_atlantic_species <- function(source = "all") {
     "northern shortfin squid", "ocean quahog", "scup", "spiny dogfish", "summer flounder",
     "tilefish", "atlantic croaker", "striped bass", "gray triggerfish", "spanish mackerel"
   )) |>
-    dplyr::mutate(clean_name = comname, source = "nefsc")
+    dplyr::mutate(clean_name = comname,
+                  data_source = "nefsc")
 
   observer <- data.frame(comname = c(
     "mackerel, atlantic", "mackerel, chub, atlantic", "croaker, atlantic", "bass, striped",
@@ -83,7 +86,7 @@ mid_atlantic_species <- function(source = "all") {
         comname == "tilefish, golden"          ~ "tilefish",
         .default = clean_name
       ),
-      source = "observer"
+      data_source = "observer"
     )
 
   permits <- data.frame(comname = c(
@@ -91,14 +94,18 @@ mid_atlantic_species <- function(source = "all") {
     "chub mackerel", "monkfish", "king mackerel", "longfin squid", "ocean quahog", "scup",
     "northern shortfin squid", "dogfish", "summer flounder", "surf clam", "tilefish"
   )) |>
-    dplyr::mutate(clean_name = comname, source = "permits")
+    dplyr::mutate(clean_name = comname,
+                  data_source = "permits")
 
-  out <- dplyr::bind_rows(landings, mrip, observer, permits, trawl, vtr)
+  combined <- dplyr::bind_rows(landings, mrip, observer, permits, trawl, vtr)
 
   if (source != "all") {
-    out <- out |> dplyr::filter(source == source)
+    out <- combined |> dplyr::filter(data_source == source)
+  } else {
+    out <- combined
   }
 
   return(out)
 }
 
+mid_atlantic_species(source = "vtr")

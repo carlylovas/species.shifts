@@ -17,4 +17,5 @@ Raw and cleaned common names for species managed by the MAFMC across six federal
 }
 \examples{
 mid_atlantic_species(source = "all")
+
 }

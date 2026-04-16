@@ -6,7 +6,7 @@
 #' @description Function to pull and clean Vessel Trip Reports from pre-existing confidential repository.
 #'
 #' @param proj_path Local path to data file
-#' @return Data frame of vessel trip reports; included yes, sub_trip_id, latitude, longitude, port name and state, species caught, weight of kept and discarded catch.
+#' @return Data frame of vessel trip reports; includes year, sub_trip_id, latitude, longitude, port name and state, species caught, weight of kept and discarded catch.
 #' @export
 #' @examples # not run
 #'
@@ -49,9 +49,9 @@ pull_vtr <- function(proj_path){
 }
 
 ## Plot
-#' @title Plot observer data
+#' @title Plot vessel trip report data
 #'
-#' @description Function to plot distributions of kept catch using federal observer data. Color indicates `leading` and `trailing` 10% of kept catch, with `center`representing 80% of kept catch. Yellow contours represent density. Distributions are cropped to management zones.
+#' @description Function to plot distributions of kept catch using vessel trip report (VTR) data. Color indicates `leading` and `trailing` 10% of kept catch, with `center`representing 80% of kept catch. Yellow contours represent density. Distributions are cropped to management zones.
 #'
 #' @param species Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`
 #' @param data Default is "vtr." `pull_vtr` must be run and named "vtr" in order to run this function.

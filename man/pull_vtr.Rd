@@ -10,7 +10,7 @@ pull_vtr(proj_path)
 \item{proj_path}{Local path to data file}
 }
 \value{
-Data frame of vessel trip reports; included yes, sub_trip_id, latitude, longitude, port name and state, species caught, weight of kept and discarded catch.
+Data frame of vessel trip reports; includes year, sub_trip_id, latitude, longitude, port name and state, species caught, weight of kept and discarded catch.
 }
 \description{
 Function to pull and clean Vessel Trip Reports from pre-existing confidential repository.

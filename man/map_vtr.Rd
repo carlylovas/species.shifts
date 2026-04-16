@@ -2,7 +2,7 @@
 % Please edit documentation in R/vtr.R
 \name{map_vtr}
 \alias{map_vtr}
-\title{Plot observer data}
+\title{Plot vessel trip report data}
 \usage{
 map_vtr(species = "all", data = "vtr")
 }
@@ -15,7 +15,7 @@ map_vtr(species = "all", data = "vtr")
 Map of distribution of observed kept catch along the Northeast US. Selecting `all` species will return a list.
 }
 \description{
-Function to plot distributions of kept catch using federal observer data. Color indicates `leading` and `trailing` 10% of kept catch, with `center`representing 80% of kept catch. Yellow contours represent density. Distributions are cropped to management zones.
+Function to plot distributions of kept catch using vessel trip report (VTR) data. Color indicates `leading` and `trailing` 10% of kept catch, with `center`representing 80% of kept catch. Yellow contours represent density. Distributions are cropped to management zones.
 }
 \examples{
 # map_vtr(species = "summer flounder", data = "vtr")
