@@ -63,11 +63,11 @@ mid_atlantic_species <- function(source = "all") {
 
   trawl <- data.frame(comname = c(
     "atlantic mackerel", "atlantic surfclam", "black sea bass", "bluefish", "blueline tilefish",
-    "butterfish", "chub mackerel", "king mackerel", "longfin squid", "monkfish",
+    "butterfish", "chub mackerel", "king mackerel", "longfin squid", "goosefish",
     "northern shortfin squid", "ocean quahog", "scup", "spiny dogfish", "summer flounder",
     "tilefish", "atlantic croaker", "striped bass", "gray triggerfish", "spanish mackerel"
   )) |>
-    dplyr::mutate(clean_name = comname,
+    dplyr::mutate(clean_name = ifelse(comname == "goosefish", "monkfish", comname),
                   data_source = "nefsc")
 
   observer <- data.frame(comname = c(
@@ -108,4 +108,4 @@ mid_atlantic_species <- function(source = "all") {
   return(out)
 }
 
-mid_atlantic_species(source = "vtr")
+mid_atlantic_species(source = "nefsc")

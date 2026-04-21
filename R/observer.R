@@ -1,6 +1,6 @@
 ## File paths ----
-# box_path  <- "/Users/clovas/Library/CloudStorage/Box-Box/"
-# proj_path <-  paste0(box_path, "CONFIDENTIAL_GARFO_MAFMC_2025/Observer data/DR25-200_Mills_Allyn.xlsx")
+# box_path  <- "/Users/clovas/Library/CloudStorage/Box-Box/MAFMC-25 Data/"
+# proj_path <- paste0(box_path, "Confidential/Observer/DR25-200_Mills_Allyn.xlsx")
 
 ## Data ###################################
 #' @title Pull federal observer data
@@ -167,6 +167,7 @@ map_observer <- function(species = "all", data = "observer"){
           ggplot2::geom_sf(data = can) +
           ggplot2::geom_sf(data = east_coast, fill = "transparent") +
           ggplot2::coord_sf(ylim = c(35,45), xlim = c(-66,-78)) +
+          ggplot2::scale_x_continuous(breaks = c(-76, -72, -68)) +
           ggplot2::geom_point(data = x,
                               ggplot2::aes(x = lon, y = lat, color = partition, group = partition, alpha = live_wt)
           ) +

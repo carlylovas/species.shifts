@@ -137,6 +137,7 @@ map_vtr <- function(species = "all", data = "vtr"){
           ggplot2::geom_sf(data = can) +
           ggplot2::geom_sf(data = east_coast, fill = "transparent") +
           ggplot2::coord_sf(ylim = c(35,45), xlim = c(-66,-78)) +
+          ggplot2::scale_x_continuous(breaks = c(-76, -72, -68)) +
           ggplot2::geom_point(data = x,
             ggplot2::aes(x = lon, y = lat, color = partition, group = partition, alpha = kept)
           ) +
