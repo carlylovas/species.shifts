@@ -16,7 +16,9 @@ All functions that begin with `map_()` or `plot_()` will filter to the species o
 
 All three groups of functions will ultimately yield the materials needed to generate a **summary report**, describing the patterns of distribution as described across the federal fishery dependent and independent data sets.
 
-![](images/package%20data%20flow%20(1).svg){style="align-items: center"}
+
+![](images/package%20data%20flow%20(1).svg)
+
 
 ------------------------------------------------------------------------
 
