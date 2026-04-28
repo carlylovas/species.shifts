@@ -16,10 +16,7 @@ All functions that begin with `map_()` or `plot_()` will filter to the species o
 
 All three groups of functions will ultimately yield the materials needed to generate a **summary report**, describing the patterns of distribution as described across the federal fishery dependent and independent data sets.
 
-
-<p align="center">
-  ![](images/package%20data%20flow%20(1).svg)
-</p>
+![](images/package%20data%20flow%20(1).svg){style="align-items: center"}
 
 ------------------------------------------------------------------------
 
@@ -38,6 +35,7 @@ All three groups of functions will ultimately yield the materials needed to gene
 [NOAA Fisheries Marine Recreational Information Program](https://www.fisheries.noaa.gov/insight/marine-recreational-information-program)
 
 ------------------------------------------------------------------------
+
 ## Installation
 
 You can install the development version from [GitHub](www.github.com) with:
