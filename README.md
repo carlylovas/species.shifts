@@ -1,6 +1,6 @@
 # Species Distribution Shifts
 
-The goal of {speciesshifts} to consolidate a variety of federal data sets commonly used by the **Gulf of Maine Research Institute** in Portland, Maine. Many of the data sets support collaborations with the New England, Mid-Atlantic, and South Atlantic Fisheries Management Council. This package pulls, cleans, and analyzes these data sets from a pre-existing data repository. Many of these data sets are confidential or require an explicit data request from the relevant bodies. Given data acquisition, it is recommended to store all data in a central repository for ease of access within the R functions.
+The goal of {speciesshifts} is to consolidate a variety of federal data sets commonly used by the **[Gulf of Maine Research Institute](https://www.gmri.org/)** in Portland, Maine. Many of the data sets support collaborations with the New England, Mid-Atlantic, and South Atlantic Fisheries Management Councils. This package pulls, cleans, and analyzes these data sets from a pre-existing data repository. Many of these data sets are confidential and/or require an explicit data request from the relevant bodies. Given data acquisition, it is recommended to store all data in a central repository for ease of access within the R functions.
 
 ------------------------------------------------------------------------
 
@@ -8,7 +8,7 @@ The goal of {speciesshifts} to consolidate a variety of federal data sets common
 
 There are a set of functions within this package to pull, clean, and plot federal fisheries data. Any `pull_()` function will read in and clean the data from the corresponding data set.
 
-`species_list()` contains a list of species that are of interest to the Mid-Atlantic Council. It contains how these species are named in each particular data set and a `clean_name`, which is the same across all data sets. If species need to be added or removed before subsequent analyses, please amend this function as needed.
+`species_list()` contains a list of species that are of interest to the [Mid-Atlantic Fisheries Management Council](https://www.mafmc.org/). It contains how these species are named in each particular data set and a `clean_name`, which is the same across all data sets. If species need to be added or removed before subsequent analyses, please amend this function as needed.
 
 All functions that begin with `map_()` or `plot_()` will filter to the species of interest, so long as they are included in the species list. The `pull_()` function for that particular data set will need to be run prior to any plotting function.
 
@@ -27,7 +27,7 @@ All three groups of functions will ultimately yield the materials needed to gene
 
 ## Featured Data Sets
 
-[NOAA Vessel Trip Reports](https://www.fisheries.noaa.gov/inport/item/11489)
+[NOAA Fisheries Vessel Trip Reports](https://www.fisheries.noaa.gov/inport/item/11489)
 
 [NEFSC Observer at Sea](https://www.fisheries.noaa.gov/inport/item/24111)
 
@@ -39,7 +39,6 @@ All three groups of functions will ultimately yield the materials needed to gene
 
 [NOAA Fisheries Marine Recreational Information Program](https://www.fisheries.noaa.gov/insight/marine-recreational-information-program)
 
-------------------------------------------------------------------------
 
 ## Installation
 

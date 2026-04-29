@@ -63,31 +63,31 @@ pull_permits <- function(proj_path){
 
   permits <- dat_clean |>
     janitor::clean_names() |> # seems redundant but is necessary
-    ungroup() |>
-    pivot_longer(cols = black_sea_bass_1:tilefish_d, names_to = "permit", values_to = "count") |>
-    distinct() |>
-    mutate(target = case_when(
-      str_starts(permit, "black_sea_bass") ~ "black sea bass",
-      str_starts(permit, "bluefish") ~ "bluefish",
-      str_starts(permit, "dogfish") ~ "dogfish",
-      str_starts(permit, "gen_cat") ~ "scallop",
-      str_starts(permit, "herring") ~ "herring",
-      str_starts(permit, "hms_") ~ "squid",
-      str_starts(permit, "lobster") ~ "lobster",
-      str_starts(permit, "monkfish") ~ "monkfish",
-      str_starts(permit, "multispecies") ~ "multispecies", # who is included in the multispecies complex
-      str_starts(permit, "quahog") ~ "ocean quahog", # check
-      str_starts(permit, "red crab") ~ "red crab",
-      str_starts(permit, "scup") ~ "scup",
-      str_starts(permit, "sea_scallop") ~ "scallop",
-      str_starts(permit, "skate") ~ "skate",
-      str_starts(permit, "squid_mack") ~ "squid/mackerel/butterfish", # will need to split out later
-      str_starts(permit, "summer_flounder") ~ "summer flounder",
-      str_starts(permit, "surfclam") ~ "surf clam",
-      str_starts(permit, "tilefish") ~ "tilefish"# includes golden and blueline
+    dplyr::ungroup() |>
+    tidyr::pivot_longer(cols = black_sea_bass_1:tilefish_d, names_to = "permit", values_to = "count") |>
+    dplyr::distinct() |>
+    dplyr::mutate(target = dplyr::case_when(
+      stringr::str_starts(permit, "black_sea_bass") ~ "black sea bass",
+      stringr::str_starts(permit, "bluefish") ~ "bluefish",
+      stringr::str_starts(permit, "dogfish") ~ "dogfish",
+      stringr::str_starts(permit, "gen_cat") ~ "scallop",
+      stringr::str_starts(permit, "herring") ~ "herring",
+      stringr::str_starts(permit, "hms_") ~ "squid",
+      stringr::str_starts(permit, "lobster") ~ "lobster",
+      stringr::str_starts(permit, "monkfish") ~ "monkfish",
+      stringr::str_starts(permit, "multispecies") ~ "multispecies", # who is included in the multispecies complex
+      stringr::str_starts(permit, "quahog") ~ "ocean quahog", # check
+      stringr::str_starts(permit, "red crab") ~ "red crab",
+      stringr::str_starts(permit, "scup") ~ "scup",
+      stringr::str_starts(permit, "sea_scallop") ~ "scallop",
+      stringr::str_starts(permit, "skate") ~ "skate",
+      stringr::str_starts(permit, "squid_mack") ~ "squid/mackerel/butterfish", # will need to split out later
+      stringr::str_starts(permit, "summer_flounder") ~ "summer flounder",
+      stringr::str_starts(permit, "surfclam") ~ "surf clam",
+      stringr::str_starts(permit, "tilefish") ~ "tilefish"# includes golden and blueline
     )) |>
-    filter(count > 0) |>
-    select(ap_year, ap_num, vp_num, pport, ppst, permit, target)
+    dplyr::filter(count > 0) |>
+    dplyr::select(ap_year, ap_num, vp_num, pport, ppst, permit, target)
 
   # Adding permit category
   permits <- permits |>
@@ -119,8 +119,8 @@ pull_permits <- function(proj_path){
 
   ### squid/mackerel/butterfish
   smb <- permits |>
-    filter(target == "squid/mackerel/butterfish") |>
-    mutate(target = case_when(
+    dplyr::filter(target == "squid/mackerel/butterfish") |>
+    dplyr::mutate(target = dplyr::case_when(
       permit %in% c("squid_mack_butter_1", "squid_mack_butter_1a","squid_mack_butter_1b","squid_mack_butter_1c") ~ "longfin squid",
       permit %in% c("squid_mack_butter_4", "squid_mack_butter_t1", "squid_mack_butter_t2", "squid_mack_butter_t3") ~ "atlantic mackerel",
       permit %in% c("squid_mack_butter_2", "squid_mack_butter_3") ~ "squid/mackerel/butterfish", # 2-charter party, 3-squid/butterfish incidental catch
@@ -145,10 +145,33 @@ pull_permits <- function(proj_path){
 #### They can be added back in later if needed to analyze specific species within the complex, otherwise will create duplicated values of permits.
 
   # Combine ----
-  permits |>
-    filter(!target == "squid/mackerel/butterfish") |>
-    full_join(smb) -> out
+  out <- permits |>
+    dplyr::filter(!target == "squid/mackerel/butterfish") |>
+    dplyr::full_join(smb)
+
 
   return(out)
 
 }
+
+ports <- permits |>
+    dplyr::select(pport, ppst) |>
+    dplyr::distinct() |>
+    tidygeocoder::geocode(city  = pport, state = ppst)
+
+
+clean <- ports |>
+  tidyr::drop_na() |>
+  dplyr::arrange(ppst) |>
+  dplyr::mutate(port = paste(pport, ppst, sep = ", ")) |>
+  dplyr::select(port, lat, long)
+
+na <- ports |>
+  dplyr::filter(is.na(lat)) |>
+  dplyr::mutate(port = paste(pport, ppst, sep = ", ")) |>
+  dplyr::select(port)
+
+test <- na |>
+  # dplyr::select(pport,ppst) |>
+  fuzzyjoin::stringdist_left_join(clean)
+
