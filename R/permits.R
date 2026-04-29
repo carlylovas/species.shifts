@@ -596,8 +596,3 @@ map_permits <- function(species = "all", data = "permits"){
   }
 }
 
-
-permits <- pull_permits(proj_path = proj_path)
-readr::write_csv(file = here::here("permits_data.csv"), x = permits)
-plot_permit_edges(species = "summer flounder", data = "permits")
-map_permits(species = "summer flounder", data = "permits")

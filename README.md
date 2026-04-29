@@ -1,3 +1,5 @@
+<img src='images/package_hex.svg' align="right" height = "140"/>
+
 # Species Distribution Shifts
 
 The goal of {species.shifts} is to consolidate a variety of federal data sets commonly used by the **[Gulf of Maine Research Institute](https://www.gmri.org/)** in Portland, Maine. Many of the data sets support collaborations with the New England, Mid-Atlantic, and South Atlantic Fisheries Management Councils. This package pulls, cleans, and analyzes these data sets from a pre-existing data repository. Many of these data sets are confidential and/or require an explicit data request from the relevant bodies. Given data acquisition, it is recommended to store all data in a central repository for ease of access within the R functions.
@@ -17,11 +19,8 @@ All functions that begin with `map_()` or `plot_()` will filter to the species o
 All three groups of functions will ultimately yield the materials needed to generate a **summary report**, describing the patterns of distribution as described across the federal fishery dependent and independent data sets.
 
 
-<center>
+<img src='images/package_data_flow.svg' align="center"/>
 
-![](images/package%20data%20flow%20(1).svg)
-
-</center>
 
 ------------------------------------------------------------------------
 
