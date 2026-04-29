@@ -403,6 +403,17 @@ plot_council_permits <- function(species = "all", data = "permits") {
 }
 
 ## Permit distribution edges
+#' @title Plotting permit 5th, 50th, and 95th weighted percentiles of latitudinal distribtion.
+#'
+#' @description Function to plot percentiles of permits across states for Mid-Atlantic species.
+#'
+#' @param data Landings outputs from `pull_permits()`
+#' @param species Mid-Atlantic managed species as listed in `species_list(source = "permits")`
+#' @return List of faceted plots.
+#' @import ggplot2
+#' @export
+#'
+#' @examples # plot_permit_edges(species = "summer flounder", data = permits)
 plot_permit_edges <- function(species = "all", data = "permits"){
 
   # Get species list
@@ -426,7 +437,6 @@ plot_permit_edges <- function(species = "all", data = "permits"){
   plots <- data |>
     dplyr::mutate(
       dplyr::across(lat:long, \(x) round(x, digits = 1)),
-      # dplyr::across(c("lat","long"), round, digits = 1),
       decade = 10*ap_year%/%10,
       facet  = stringr::str_to_title(
         paste(permit, category, sep = " - ")))|>
@@ -487,7 +497,107 @@ plot_permit_edges <- function(species = "all", data = "permits"){
   }
 }
 
+
+
+## Map permits
+#' @title Map permits by type along NEUS coast.
+#'
+#' @description Function to plot distributions of permits along the Northeast US coastline.
+#' @param species Default is "all", includes Mid-Atlantic species represented in `species.shifts::species_list()`
+#' @param data Default is "permits" `pull_permits` must be run and named "permits" in order to run this function.
+#' @return Map of distribution of observed kept catch along the Northeast US. Selecting `all` species will return a list.
+#' @export
+#' @examples # map_permits(species = "summer flounder", data = "permits")
+#'
+map_permits <- function(species = "all", data = "permits"){
+
+  # Get species list
+  species_list <- species.shifts::species_list(source = "permits")
+
+  # Base filter
+  data <- permits |>
+    dplyr::rename("comname" = "target") |>
+    dplyr::right_join(species_list)
+
+  # Validate and filter early if specific species requested
+  if (species != "all") {
+    if (!species %in% data$clean_name) {
+      message("Species '", species, "' not found.")
+      return(NULL)
+    }
+    data <- data |> dplyr::filter(clean_name == species)
+  }
+
+  # Spatial goodies
+  sf::sf_use_s2(FALSE)
+
+  shp_path <- here::here("data", "shapefiles", "Council_Scopes.shp")
+
+  boundaries <- sf::st_read(shp_path, quiet = TRUE)
+  boundaries <- ggplot2::fortify(boundaries)
+
+  east_coast <- boundaries |>
+    janitor::clean_names() |>
+    dplyr::filter(council %in% c("New England", "Mid-Atlantic", "South Atlantic")) |>
+    dplyr::mutate(factor = factor(council, levels = c("New England", "Mid-Atlantic", "South Atlantic")))
+
+  usa <- rnaturalearth::ne_states(country = "united states of america", returnclass = "sf")
+  can <- rnaturalearth::ne_states(country = "canada", returnclass = "sf")
+
+  # plot
+  plots <- data |>
+    dplyr::mutate(
+      dplyr::across(lat:long, \(x) round(x, digits = 1)),
+      decade = 10*ap_year%/%10,
+      facet  = stringr::str_to_title(
+        paste(permit, category, sep = " - "))) |>
+    dplyr::group_by(clean_name) |>
+    tidyr::nest() |>
+    dplyr::mutate(
+      out = purrr::map(data, function(x){
+        ggplot2::ggplot() +
+          ggplot2::geom_sf(data = usa) +
+          ggplot2::geom_sf(data = can) +
+          ggplot2::geom_sf(data = east_coast, fill = "transparent") +
+          ggplot2::coord_sf(ylim = c(35,45), xlim = c(-66,-78)) +
+          ggplot2::scale_x_continuous(breaks = c(-76, -72, -68)) +
+          ggplot2::geom_point(data = x,
+                              ggplot2::aes(x = long, y = lat, color = facet)
+          ) +
+          gmRi::scale_color_gmri() +
+          ggplot2::facet_grid(
+            ggplot2::vars(permit),
+            ggplot2::vars(decade)
+            ) +
+          ggplot2::guides(
+            color = ggplot2::guide_legend(title = "Permit types")
+          ) +
+          ggplot2::theme(
+            text              = ggplot2::element_text(family = "Avenir", size = 12),
+            axis.title        = ggplot2::element_blank(),
+            legend.position   = "bottom",
+            legend.box        = "vertical",
+            strip.background  = ggplot2::element_blank(),
+            strip.text        = ggplot2::element_text(hjust = 0, face = "bold", size = 12),
+            panel.grid.major  = ggplot2::element_line(color = "#535353", linewidth = 0.1, linetype = 3),
+            panel.grid.minor  = ggplot2::element_blank(),
+            panel.background  = ggplot2::element_rect(fill = "transparent"),
+            panel.border      = ggplot2::element_rect(
+              fill      = "transparent",
+              linetype  = 1,
+              linewidth = 0.5,
+              color     = "#535353"
+            ))
+      }))
+  if (species == "all") {
+    return(plots |> dplyr::select(clean_name, out))
+  } else {
+    return(plots$out[[1]])
+  }
+}
+
+
 permits <- pull_permits(proj_path = proj_path)
-
+readr::write_csv(file = here::here("permits_data.csv"), x = permits)
 plot_permit_edges(species = "summer flounder", data = "permits")
-
+map_permits(species = "summer flounder", data = "permits")

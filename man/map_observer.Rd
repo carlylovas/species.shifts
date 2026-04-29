@@ -7,7 +7,7 @@
 map_observer(species = "all", data = "observer")
 }
 \arguments{
-\item{species}{Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`}
+\item{species}{Default is "all", includes Mid-Atlantic species represented in `species.shifts::species_list()`}
 
 \item{data}{Default is "observer" `pull_observer` must be run and named "observer" in order to run this function.}
 }

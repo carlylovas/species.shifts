@@ -7,7 +7,7 @@
 plot_landings_trends(species = "all", data = "landings")
 }
 \arguments{
-\item{species}{Mid-Atlantic managed species as listed in `mid_atlantic_species(source = "landings")`}
+\item{species}{Mid-Atlantic managed species as listed in `species_list(source = "landings")`}
 
 \item{data}{Landings outputs from `pull_garfo_landings()`}
 }

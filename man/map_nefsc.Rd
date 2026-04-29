@@ -7,7 +7,7 @@
 map_nefsc(species = "all", data = "nefsc")
 }
 \arguments{
-\item{species}{Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`}
+\item{species}{Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`}
 
 \item{data}{Default is "nefsc" `nefsc` must be run and named "observer" in order to run this function.}
 }

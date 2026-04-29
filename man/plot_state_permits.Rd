@@ -7,7 +7,7 @@
 plot_state_permits(species = "all", data = "permits")
 }
 \arguments{
-\item{species}{Mid-Atlantic managed species as listed in `mid_atlantic_species(source = "permits")`}
+\item{species}{Mid-Atlantic managed species as listed in `species_list(source = "permits")`}
 
 \item{data}{Landings outputs from `pull_permits()`}
 }

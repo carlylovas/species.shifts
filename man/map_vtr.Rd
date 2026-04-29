@@ -7,7 +7,7 @@
 map_vtr(species = "all", data = "vtr")
 }
 \arguments{
-\item{species}{Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`}
+\item{species}{Default is "all", includes Mid-Atlantic species represented in `species.shifts::species_list()`}
 
 \item{data}{Default is "vtr." `pull_vtr` must be run and named "vtr" in order to run this function.}
 }
