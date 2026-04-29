@@ -2,15 +2,36 @@
 # box_path  <- "/Users/clovas/Library/CloudStorage/Box-Box/MAFMC-25 Data/"
 # proj_path <- paste0(box_path, "Non-confidential/Permits/")
 
+## Data pull ----
+
 #' @title Pull federal permits data
 #'
-#' @description Function to pull and clean GARFO commercial fishing permits from pre-existing confidential repository.
+#' @description Function to pull, clean and geocode GARFO commercial fishing permits from pre-existing confidential repository. Note that due to spelling error, geocoding principal ports removes 1% of permit entries, and takes approximately 25 minutes to run.
 #'
 #' @param proj_path Local path to data file
 #' @return Data frame of permits; includes year, prinicpal port and state, permit type, target species, and category (commerical, for-hire).
 #' @export
 #' @examples # permits <- pull_permits(proj_path = proj_path)
 pull_permits <- function(proj_path){
+
+  state_names <- c(
+    ME = "Maine",          NH = "New Hampshire", MA = "Massachusetts",
+    CT = "Connecticut",    RI = "Rhode Island",  NY = "New York",
+    NJ = "New Jersey",     PA = "Pennsylvania",  MD = "Maryland",
+    DE = "Delaware",       VA = "Virginia",      NC = "North Carolina",
+    SC = "South Carolina", GA = "Georgia",       FL = "Florida"
+  )
+
+  council_map <- c(
+    "Maine" = "New England",         "New Hampshire" = "New England",
+    "Massachusetts" = "New England", "Connecticut" = "New England",
+    "Rhode Island" = "New England",  "New York" = "Mid-Atlantic",
+    "New Jersey" = "Mid-Atlantic",      "Pennsylvania" = "Mid-Atlantic",
+    "Maryland" = "Mid-Atlantic",        "Delaware" = "Mid-Atlantic",
+    "Virginia" = "Mid-Atlantic",        "North Carolina" = "South Atlantic",
+    "South Carolina" = "South Atlantic","Georgia" = "South Atlantic",
+    "Florida" = "South Atlantic"
+  )
 
   # Read in multiple excel files
   read_files <- function(file_name){
@@ -77,7 +98,7 @@ pull_permits <- function(proj_path){
       stringr::str_starts(permit, "monkfish") ~ "monkfish",
       stringr::str_starts(permit, "multispecies") ~ "multispecies", # who is included in the multispecies complex
       stringr::str_starts(permit, "quahog") ~ "ocean quahog", # check
-      stringr::str_starts(permit, "red crab") ~ "red crab",
+      stringr::str_starts(permit, "red_crab") ~ "red crab",
       stringr::str_starts(permit, "scup") ~ "scup",
       stringr::str_starts(permit, "sea_scallop") ~ "scallop",
       stringr::str_starts(permit, "skate") ~ "skate",
@@ -145,33 +166,240 @@ pull_permits <- function(proj_path){
 #### They can be added back in later if needed to analyze specific species within the complex, otherwise will create duplicated values of permits.
 
   # Combine ----
-  out <- permits |>
+  all <- permits |>
     dplyr::filter(!target == "squid/mackerel/butterfish") |>
     dplyr::full_join(smb)
 
+  # Geocode ----
+  ports <- all |>
+    dplyr::select(pport, ppst) |>
+    dplyr::distinct() |>
+    tidygeocoder::geocode(city  = pport, state = ppst)
+
+  geocodes <- ports |>
+    tidyr::drop_na() |>
+    dplyr::arrange(ppst) |>
+    dplyr::mutate(port = paste(pport, ppst, sep = ", ")) |>
+    dplyr::select(port, lat, long)
+
+  temp <- permits |>
+    dplyr::mutate(port = paste(pport,ppst,sep=", ")) |>
+    dplyr::left_join(geocodes) |>
+    dplyr::filter(is.na(lat)) |>
+    dplyr::select(!c(lat,long)) |>
+    fuzzyjoin::stringdist_left_join(geocodes) |>
+    tidyr::drop_na() |>
+    tidyr::separate(port.y, into= c("clean_port", "state"), sep = ", ") |>
+    dplyr::mutate(match = ifelse(ppst == state, T,F)) |>
+    dplyr::filter(!match == FALSE) |>
+    dplyr::select(!c(pport, port.x,state,match)) |>
+    dplyr::rename("pport" = "clean_port") |>
+    dplyr::relocate(pport, .before = ppst)
+
+  out <- permits |>
+    dplyr::mutate(port = paste(pport,ppst,sep=", ")) |>
+    dplyr::left_join(geocodes) |>
+    dplyr::filter(!is.na(lat)) |>
+    dplyr::select(!port) |>
+    dplyr::full_join(temp) |>
+    dplyr::arrange(ap_year, ap_num) |>
+    dplyr::distinct() |>
+    dplyr::mutate(
+      state_full = dplyr::recode(ppst, !!!state_names),
+      council    = factor(council_map[state_full], levels = c("New England", "Mid-Atlantic", "South Atlantic"))
+    ) >
+    dplyr::filter(!is.na(council)) # removes non-East coast states (AK, AL, TX, etc.)
 
   return(out)
 
 }
 
-ports <- permits |>
-    dplyr::select(pport, ppst) |>
-    dplyr::distinct() |>
-    tidygeocoder::geocode(city  = pport, state = ppst)
+
+## Plotting ----
+## State proportions
+#' @title Plotting permit proportions by state
+#'
+#' @description Function to plot proportions of landings across states for Mid-Atlantic species.
+#'
+#' @param data Landings outputs from `pull_permits()`
+#' @param species Mid-Atlantic managed species as listed in `mid_atlantic_species(source = "permits")`
+#' @return List of faceted plots.
+#' @import ggplot2
+#' @export
+#'
+#' @examples # plot_state_permits(species = "summer flounder", data = permits)
+
+plot_state_permits <- function(species = "all", data = "permits") {
+
+  # Get species list
+  species_list <- speciesshifts::mid_atlantic_species(source = "permits")
+
+  # Base filter
+  data <- permits |>
+    dplyr::filter(target %in% species_list$comname)
+
+  # Validate and filter early if specific species requested
+  if (species != "all") {
+    if (!species %in% data$target) {
+      message("Species '", species, "' not found in permits data.")
+      return(NULL)
+    }
+    data <- data |> dplyr::filter(target == species)
+  }
+
+  # Build plots only for relevant species
+  plots <- data |>
+    dplyr::group_by(ap_year, permit, target, category, state_full) |>
+    dplyr::summarise(count =
+                       dplyr::n()) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(ap_year, permit) |>
+    dplyr::mutate(total_count = sum(count),
+           prop  = (count / total_count),
+           facet =
+             stringr::str_to_title(
+               paste(
+                 permit, category, sep = " - "
+                 )
+               )) |>
+    dplyr::group_by(target) |>
+    tidyr::nest() |>
+    tidyr::drop_na() |>
+    dplyr::mutate(
+      out = purrr::map2(data, target, function(x, y) {
+        ggplot2::ggplot(data = x) +
+          ggplot2::geom_col(
+            ggplot2::aes(x = ap_year, y = prop, fill = state_full)
+          ) +
+          gmRi::scale_fill_gmri() +
+          ggplot2::facet_wrap(
+            ~facet,
+            nrow = 1
+          ) +
+          ggplot2::guides(
+            fill = ggplot2::guide_legend(nrow = 2)
+          ) +
+          ggplot2::labs(
+            title = "Proportion of permits by state",
+            x = "Year",
+            y = "Proportion"
+          ) +
+          ggplot2::theme(
+            text              = ggplot2::element_text(family = "Avenir", size = 13),
+            legend.title      = ggplot2::element_blank(),
+            axis.title        = ggplot2::element_blank(),
+            legend.position   = "bottom",
+            strip.background  = ggplot2::element_blank(),
+            strip.text        = ggplot2::element_text(hjust = 0, face = "plain", size = 15),
+            panel.grid.major  = ggplot2::element_line(color = "#535353", linewidth = 0.1, linetype = 3),
+            panel.grid.minor  = ggplot2::element_blank(),
+            panel.background  = ggplot2::element_rect(fill = "transparent"),
+            panel.border      = ggplot2::element_rect(
+              fill      = "transparent",
+              linetype  = 1,
+              linewidth = 0.5,
+              color     = "#535353"
+            )
+          )
+      })
+    ) |>
+    dplyr::select(!data)
+
+  return(plots$out)
+}
+
+## Council proportions
+#' @title Plotting permit proportions by Management Councils.
+#'
+#' @description Function to plot proportions of permits across states for Mid-Atlantic species.
+#'
+#' @param data Landings outputs from `pull_permits()`
+#' @param species Mid-Atlantic managed species as listed in `mid_atlantic_species(source = "permits")`
+#' @return List of faceted plots.
+#' @import ggplot2
+#' @export
+#'
+#' @examples # plot_council_permits(species = "summer flounder", data = permits)
+
+plot_council_permits <- function(species = "all", data = "permits") {
+
+  # Get species list
+  species_list <- speciesshifts::mid_atlantic_species(source = "permits")
+
+  # Base filter
+  data <- permits |>
+    dplyr::filter(target %in% species_list$comname)
+
+  # Validate and filter early if specific species requested
+  if (species != "all") {
+    if (!species %in% data$target) {
+      message("Species '", species, "' not found in permits data.")
+      return(NULL)
+    }
+    data <- data |> dplyr::filter(target == species)
+  }
+
+  # Build plots only for relevant species
+  plots <- data |>
+    dplyr::group_by(ap_year, permit, target, category, council) |>
+    dplyr::summarise(count =
+                       dplyr::n()) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(ap_year, permit) |>
+    dplyr::mutate(total_count = sum(count),
+                  prop  = (count / total_count),
+                  facet =
+                    stringr::str_to_title(
+                      paste(
+                        permit, category, sep = " - "
+                      )
+                    )) |>
+    dplyr::group_by(target) |>
+    tidyr::nest() |>
+    tidyr::drop_na() |>
+    dplyr::mutate(
+      out = purrr::map2(data, target, function(x, y) {
+        ggplot2::ggplot(data = x) +
+          ggplot2::geom_col(
+            ggplot2::aes(x = ap_year, y = prop, fill = council)
+          ) +
+          ggplot2::scale_fill_manual(values = c("#363b45", "#00608a","#C1DEFF")) +
+          ggplot2::facet_wrap(
+            ~facet,
+            nrow = 1
+          ) +
+          ggplot2::guides(
+            fill = ggplot2::guide_legend(nrow = 1)
+          ) +
+          ggplot2::labs(
+            title = "Proportion of permits by council",
+            x = "Year",
+            y = "Proportion"
+          ) +
+          ggplot2::theme(
+            text              = ggplot2::element_text(family = "Avenir", size = 13),
+            legend.title      = ggplot2::element_blank(),
+            axis.title        = ggplot2::element_blank(),
+            legend.position   = "bottom",
+            strip.background  = ggplot2::element_blank(),
+            strip.text        = ggplot2::element_text(hjust = 0, face = "plain", size = 15),
+            panel.grid.major  = ggplot2::element_line(color = "#535353", linewidth = 0.1, linetype = 3),
+            panel.grid.minor  = ggplot2::element_blank(),
+            panel.background  = ggplot2::element_rect(fill = "transparent"),
+            panel.border      = ggplot2::element_rect(
+              fill      = "transparent",
+              linetype  = 1,
+              linewidth = 0.5,
+              color     = "#535353"
+            )
+          )
+      })
+    ) |>
+    dplyr::select(!data)
+
+  return(plots$out)
+}
 
 
-clean <- ports |>
-  tidyr::drop_na() |>
-  dplyr::arrange(ppst) |>
-  dplyr::mutate(port = paste(pport, ppst, sep = ", ")) |>
-  dplyr::select(port, lat, long)
 
-na <- ports |>
-  dplyr::filter(is.na(lat)) |>
-  dplyr::mutate(port = paste(pport, ppst, sep = ", ")) |>
-  dplyr::select(port)
-
-test <- na |>
-  # dplyr::select(pport,ppst) |>
-  fuzzyjoin::stringdist_left_join(clean)
 

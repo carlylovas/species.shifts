@@ -25,9 +25,9 @@ pull_garfo_landings <- function(proj_path = NULL, sheet = NULL, skip = NULL) {
   )
 
   council_map <- c(
-    "Maine" = "North Atlantic",         "New Hampshire" = "North Atlantic",
-    "Massachusetts" = "North Atlantic", "Connecticut" = "North Atlantic",
-    "Rhode Island" = "North Atlantic",  "New York" = "Mid-Atlantic",
+    "Maine" = "New England",         "New Hampshire" = "New England",
+    "Massachusetts" = "New England", "Connecticut" = "New England",
+    "Rhode Island" = "New England",  "New York" = "Mid-Atlantic",
     "New Jersey" = "Mid-Atlantic",      "Pennsylvania" = "Mid-Atlantic",
     "Maryland" = "Mid-Atlantic",        "Delaware" = "Mid-Atlantic",
     "Virginia" = "Mid-Atlantic",        "North Carolina" = "South Atlantic",
@@ -73,7 +73,7 @@ pull_garfo_landings <- function(proj_path = NULL, sheet = NULL, skip = NULL) {
 #' @examples # not run
 
 ## Landings trends
-landings_trends <- function(species = "all", data = "landings") {
+plot_landings_trends <- function(species = "all", data = "landings") {
 
   # Get species list
   species_list <- speciesshifts::mid_atlantic_species(source = "landings")
@@ -155,7 +155,7 @@ landings_trends <- function(species = "all", data = "landings") {
 #'
 #' @examples # not run
 
-state_proportions <- function(species = "all", data = "landings") {
+plot_state_landings <- function(species = "all", data = "landings") {
 
   # Get species list
   species_list <- speciesshifts::mid_atlantic_species(source = "landings")
@@ -246,7 +246,7 @@ state_proportions <- function(species = "all", data = "landings") {
 #'
 #' @examples # not run
 
-council_proportions <- function(species = "all", data = "landings") {
+plot_council_landings <- function(species = "all", data = "landings") {
 
   # Get species list
   species_list <- speciesshifts::mid_atlantic_species(source = "landings")
