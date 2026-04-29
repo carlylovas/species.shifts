@@ -1,6 +1,6 @@
 # Species Distribution Shifts
 
-The goal of {speciesshifts} is to consolidate a variety of federal data sets commonly used by the **[Gulf of Maine Research Institute](https://www.gmri.org/)** in Portland, Maine. Many of the data sets support collaborations with the New England, Mid-Atlantic, and South Atlantic Fisheries Management Councils. This package pulls, cleans, and analyzes these data sets from a pre-existing data repository. Many of these data sets are confidential and/or require an explicit data request from the relevant bodies. Given data acquisition, it is recommended to store all data in a central repository for ease of access within the R functions.
+The goal of {species.shifts} is to consolidate a variety of federal data sets commonly used by the **[Gulf of Maine Research Institute](https://www.gmri.org/)** in Portland, Maine. Many of the data sets support collaborations with the New England, Mid-Atlantic, and South Atlantic Fisheries Management Councils. This package pulls, cleans, and analyzes these data sets from a pre-existing data repository. Many of these data sets are confidential and/or require an explicit data request from the relevant bodies. Given data acquisition, it is recommended to store all data in a central repository for ease of access within the R functions.
 
 ------------------------------------------------------------------------
 
