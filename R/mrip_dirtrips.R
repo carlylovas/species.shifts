@@ -66,7 +66,7 @@
 #' @importFrom here here
 #' @import survey
 #' @export
-get_mrip_directed_trips <- function(
+pull_mrip_directed_trips <- function(
     species    = c(
       "ATLANTIC CROAKER", "ATLANTIC MACKEREL", "BLACK SEA BASS",
       "SPANISH MACKEREL", "STRIPED BASS", "SUMMER FLOUNDER",

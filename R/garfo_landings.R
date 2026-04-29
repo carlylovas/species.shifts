@@ -65,7 +65,7 @@ pull_garfo_landings <- function(proj_path = NULL, sheet = NULL, skip = NULL) {
 #' @description Function to plot landed value and volume trends for Mid-Atlantic species.
 #'
 #' @param data Landings outputs from `pull_garfo_landings()`
-#' @param species Mid-Atlantic managed species as listed in `mid_atlantic_species(source = "landings")`
+#' @param species Mid-Atlantic managed species as listed in `species_list(source = "landings")`
 #' @return List of faceted plots.
 #' @import ggplot2
 #' @export
@@ -76,7 +76,7 @@ pull_garfo_landings <- function(proj_path = NULL, sheet = NULL, skip = NULL) {
 plot_landings_trends <- function(species = "all", data = "landings") {
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "landings")
+  species_list <- species.shifts::species_list(source = "landings")
 
   # Base filter
   data <- landings |>
@@ -148,7 +148,7 @@ plot_landings_trends <- function(species = "all", data = "landings") {
 #' @description Function to plot proportions of landings across states for Mid-Atlantic species.
 #'
 #' @param data Landings outputs from `pull_garfo_landings()`
-#' @param species Mid-Atlantic managed species as listed in `mid_atlantic_species(source = "landings")`
+#' @param species Mid-Atlantic managed species as listed in `species_list(source = "landings")`
 #' @return List of faceted plots.
 #' @import ggplot2
 #' @export
@@ -158,7 +158,7 @@ plot_landings_trends <- function(species = "all", data = "landings") {
 plot_state_landings <- function(species = "all", data = "landings") {
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "landings")
+  species_list <- species.shifts::species_list(source = "landings")
 
   # Base filter
   data <- landings |>
@@ -239,7 +239,7 @@ plot_state_landings <- function(species = "all", data = "landings") {
 #' @description Function to plot proportions of landings across Council Management Zones for Mid-Atlantic species.
 #'
 #' @param data Landings outputs from `pull_garfo_landings()`
-#' @param species Mid-Atlantic managed species as listed in `mid_atlantic_species(source = "landings")`
+#' @param species Mid-Atlantic managed species as listed in `species_list(source = "landings")`
 #' @return List of faceted plots.
 #' @import ggplot2
 #' @export
@@ -249,7 +249,7 @@ plot_state_landings <- function(species = "all", data = "landings") {
 plot_council_landings <- function(species = "all", data = "landings") {
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "landings")
+  species_list <- species.shifts::species_list(source = "landings")
 
   # Base filter
   data <- landings |>

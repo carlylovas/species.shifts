@@ -207,7 +207,7 @@ pull_permits <- function(proj_path){
     dplyr::mutate(
       state_full = dplyr::recode(ppst, !!!state_names),
       council    = factor(council_map[state_full], levels = c("New England", "Mid-Atlantic", "South Atlantic"))
-    ) >
+    ) |>
     dplyr::filter(!is.na(council)) # removes non-East coast states (AK, AL, TX, etc.)
 
   return(out)
@@ -222,7 +222,7 @@ pull_permits <- function(proj_path){
 #' @description Function to plot proportions of landings across states for Mid-Atlantic species.
 #'
 #' @param data Landings outputs from `pull_permits()`
-#' @param species Mid-Atlantic managed species as listed in `mid_atlantic_species(source = "permits")`
+#' @param species Mid-Atlantic managed species as listed in `species_list(source = "permits")`
 #' @return List of faceted plots.
 #' @import ggplot2
 #' @export
@@ -231,25 +231,26 @@ pull_permits <- function(proj_path){
 
 plot_state_permits <- function(species = "all", data = "permits") {
 
+
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "permits")
+  species_list <- species.shifts::species_list(source = "permits")
 
   # Base filter
-  data <- permits |>
-    dplyr::filter(target %in% species_list$comname)
+  data <- data |>
+    dplyr::right_join(species_list)
 
   # Validate and filter early if specific species requested
   if (species != "all") {
-    if (!species %in% data$target) {
+    if (!species %in% data$clean_name) {
       message("Species '", species, "' not found in permits data.")
       return(NULL)
     }
-    data <- data |> dplyr::filter(target == species)
+    data <- data |> dplyr::filter(clean_name == species)
   }
 
   # Build plots only for relevant species
   plots <- data |>
-    dplyr::group_by(ap_year, permit, target, category, state_full) |>
+    dplyr::group_by(ap_year, permit, clean_name, category, state_full) |>
     dplyr::summarise(count =
                        dplyr::n()) |>
     dplyr::ungroup() |>
@@ -262,11 +263,11 @@ plot_state_permits <- function(species = "all", data = "permits") {
                  permit, category, sep = " - "
                  )
                )) |>
-    dplyr::group_by(target) |>
+    dplyr::group_by(clean_name) |>
     tidyr::nest() |>
     tidyr::drop_na() |>
     dplyr::mutate(
-      out = purrr::map2(data, target, function(x, y) {
+      out = purrr::map2(data, clean_name, function(x, y) {
         ggplot2::ggplot(data = x) +
           ggplot2::geom_col(
             ggplot2::aes(x = ap_year, y = prop, fill = state_full)
@@ -314,7 +315,7 @@ plot_state_permits <- function(species = "all", data = "permits") {
 #' @description Function to plot proportions of permits across states for Mid-Atlantic species.
 #'
 #' @param data Landings outputs from `pull_permits()`
-#' @param species Mid-Atlantic managed species as listed in `mid_atlantic_species(source = "permits")`
+#' @param species Mid-Atlantic managed species as listed in `species_list(source = "permits")`
 #' @return List of faceted plots.
 #' @import ggplot2
 #' @export
@@ -324,24 +325,25 @@ plot_state_permits <- function(species = "all", data = "permits") {
 plot_council_permits <- function(species = "all", data = "permits") {
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "permits")
+  species_list <- species.shifts::species_list(source = "permits")
 
   # Base filter
-  data <- permits |>
-    dplyr::filter(target %in% species_list$comname)
+  data <- data |>
+    dplyr::rename("comname" = "target") |>
+    dplyr::right_join(species_list)
 
   # Validate and filter early if specific species requested
   if (species != "all") {
-    if (!species %in% data$target) {
+    if (!species %in% data$clean_name) {
       message("Species '", species, "' not found in permits data.")
       return(NULL)
     }
-    data <- data |> dplyr::filter(target == species)
+    data <- data |> dplyr::filter(clean_name == species)
   }
 
   # Build plots only for relevant species
   plots <- data |>
-    dplyr::group_by(ap_year, permit, target, category, council) |>
+    dplyr::group_by(ap_year, permit, clean_name, category, council) |>
     dplyr::summarise(count =
                        dplyr::n()) |>
     dplyr::ungroup() |>
@@ -354,11 +356,11 @@ plot_council_permits <- function(species = "all", data = "permits") {
                         permit, category, sep = " - "
                       )
                     )) |>
-    dplyr::group_by(target) |>
+    dplyr::group_by(clean_name) |>
     tidyr::nest() |>
     tidyr::drop_na() |>
     dplyr::mutate(
-      out = purrr::map2(data, target, function(x, y) {
+      out = purrr::map2(data, clean_name, function(x, y) {
         ggplot2::ggplot(data = x) +
           ggplot2::geom_col(
             ggplot2::aes(x = ap_year, y = prop, fill = council)
@@ -400,6 +402,92 @@ plot_council_permits <- function(species = "all", data = "permits") {
   return(plots$out)
 }
 
+## Permit distribution edges
+plot_permit_edges <- function(species = "all", data = "permits"){
 
+  # Get species list
+  species_list <- species.shifts::species_list(source = "permits")
 
+  # Base filter
+  data <- permits |>
+    dplyr::rename("comname" = "target") |>
+    dplyr::right_join(species_list)
+
+  # Validate and filter early if specific species requested
+  if (species != "all") {
+    if (!species %in% data$clean_name) {
+      message("Species '", species, "' not found.")
+      return(NULL)
+    }
+    data <- data |> dplyr::filter(clean_name == species)
+  }
+
+  # Calculate edges and plot
+  plots <- data |>
+    dplyr::mutate(
+      dplyr::across(lat:long, \(x) round(x, digits = 1)),
+      # dplyr::across(c("lat","long"), round, digits = 1),
+      decade = 10*ap_year%/%10,
+      facet  = stringr::str_to_title(
+        paste(permit, category, sep = " - ")))|>
+    dplyr::group_by(ap_year, clean_name, facet, lat, long) |>
+    dplyr::summarise(
+      count = dplyr::n()) |>
+    dplyr::group_by(ap_year, clean_name, facet) |>
+    dplyr::summarise(
+      `95%` = Hmisc::wtd.quantile(x = lat, weights = count, probs = 0.95, na.rm = T),
+      `50%` = Hmisc::wtd.quantile(x = lat, weights = count, probs = 0.50, na.rm = T),
+      `5%`  = Hmisc::wtd.quantile(x = lat, weights = count, probs = 0.05, na.rm = T)
+    ) |>
+    tidyr::pivot_longer(cols = c(`95%`,`50%`,`5%`), names_to = "percentile", values_to = "lat") |>
+    dplyr::group_by(clean_name, percentile, facet) |>
+    dplyr::mutate(rmean  = zoo::rollapplyr(lat, width = 5, FUN = mean, align = "center", partial = T),
+                  percentile = factor(percentile, levels = c('5%','50%','95%'))) |>
+    dplyr::group_by(clean_name) |>
+    tidyr::nest() |>
+    dplyr::mutate(
+      out = purrr::map(data, function(x){
+        ggplot2::ggplot() +
+          ggplot2::geom_line(data = x,
+                             ggplot2::aes(x = ap_year, y = rmean, color = percentile), linetype = 2
+          ) +
+          ggplot2::geom_smooth(data = x,
+                               ggplot2::aes(x = ap_year, y = rmean, color = percentile), method = "lm", se = FALSE
+          ) +
+          ggplot2::labs(
+            title = "Latitude percentiles",
+            subtitle = "5-year rolling mean",
+            x     = "Year",
+            y     = "Latitude") +
+          ggplot2::facet_wrap(~facet, nrow = 1) +
+          ggplot2::guides(color =
+                            ggplot2::guide_legend("Percentiles")) +
+          gmRi::scale_color_gmri() +
+          ggplot2::theme(
+            text              = ggplot2::element_text(family = "Avenir", size = 13),
+            plot.title        = ggplot2::element_text(face = "bold"),
+            legend.position   = "bottom",
+            legend.box        = "vertical",
+            strip.background  = ggplot2::element_blank(),
+            strip.text        = ggplot2::element_text(hjust = 0, face = "bold", size = 15),
+            panel.grid.major  = ggplot2::element_line(color = "#535353", linewidth = 0.1, linetype = 3),
+            panel.grid.minor  = ggplot2::element_blank(),
+            panel.background  = ggplot2::element_rect(fill = "transparent"),
+            panel.border      = ggplot2::element_rect(
+              fill      = "transparent",
+              linetype  = 1,
+              linewidth = 0.5,
+              color     = "#535353"
+            ))
+      }))
+  if (species == "all") {
+    return(plots |> dplyr::select(clean_name, out))
+  } else {
+    return(plots$out[[1]])
+  }
+}
+
+permits <- pull_permits(proj_path = proj_path)
+
+plot_permit_edges(species = "summer flounder", data = "permits")
 

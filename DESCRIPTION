@@ -2,18 +2,50 @@ Package: species.shifts
 Type: Package
 Title: Northeast US Marine Species Distribution Shifts
 Version: 0.1.0
-Authors@R: c(
-    person(
-      "Carly", "Lovas",
-      email = "carly.lovas@gmail.com",
-      role = "Quantitative Research Associate, GMRI"
-    )
-  )
-Description: The goal of {species.shifts} is to consolidate a variety of federal data sets commonly used by the **[Gulf of Maine Research Institute](https://www.gmri.org/)** in Portland, Maine. Many of the data sets support collaborations with the New England, Mid-Atlantic, and South Atlantic Fisheries Management Councils. 
-  This package pulls, cleans, and analyzes these data sets from a pre-existing data repository. Many of these data sets are confidential and/or require an explicit data request from the relevant bodies. Given data acquisition, it is recommended to store all data in a central repository for ease of access within the R functions.
-License: MIT
+Authors@R: (person("Carly", "Lovas", role = c("aut", "cre"),
+                     email = "carly.lovas@gmail.com"))
+Author: Carly Lovas [aut, cre]
+Description: The goal of {species.shifts} is to consolidate a variety 
+  of federal data sets commonly used by the Gulf of Maine Research Institute 
+  in Portland, Maine. Many of the data sets support collaborations with the 
+  New England, Mid-Atlantic, and South Atlantic Fisheries Management Councils. 
+  This package pulls, cleans, and analyzes these data sets from a pre-existing 
+  data repository. Many of these data sets are confidential and/or require an 
+  explicit data request from the relevant bodies. Given data acquisition, it 
+  is recommended to store all data in a central repository for ease of access 
+  within the R functions.
+License: CC0
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.3
-URL: https://github.com/carlylovas/speciesshifts
-BugReports: https://github.com/carlylovas/speciesshifts/issues
+Suggests: 
+    knitr,
+    rmarkdown,
+    patchwork,
+    rnaturalearth,
+    sf,
+    purrr,
+    stringr,
+    tibble,
+    data.table,
+    ecodata,
+    stars,
+    tidyverse
+VignetteBuilder: knitr
+Imports:
+    ggplot2 (>= 2.1.1),
+    grDevices (>= 3.0.0),
+    dplyr,
+    ncdf4,
+    raster,
+    rlang,
+    magick,
+    lubridate,
+    ggthemes,
+    shiny,
+    janitor,
+    readr,
+    tidyr
+
+URL: https://github.com/carlylovas/species.shifts
+BugReports: https://github.com/carlylovas/species.shifts/issues

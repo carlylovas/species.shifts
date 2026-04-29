@@ -13,7 +13,7 @@ pull_permits(proj_path)
 Data frame of permits; includes year, prinicpal port and state, permit type, target species, and category (commerical, for-hire).
 }
 \description{
-Function to pull and clean GARFO commercial fishing permits from pre-existing confidential repository.
+Function to pull, clean and geocode GARFO commercial fishing permits from pre-existing confidential repository. Note that due to spelling error, geocoding principal ports removes 1% of permit entries, and takes approximately 25 minutes to run.
 }
 \examples{
 # permits <- pull_permits(proj_path = proj_path)

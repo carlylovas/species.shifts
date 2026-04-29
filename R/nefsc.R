@@ -97,16 +97,16 @@ pull_nefsc <- function(proj_path){
 #'
 #' @description Function to calculate the seasonal centers of biomass of Mid-Atlantic species and map them.
 #'
-#' @param species Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`
+#' @param species Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`
 #' @param data Default is "nefsc". `pull_nefsc()` must be run prior in order to run this function.
 #' @return Map of distribution of seasonal centers of biomass along the Northeast US. Selecting `all` species will return a list.
 #' @export
 #' @examples # map_nefsc_cob(species = "black sea bass", data = nefsc)
 
-nefsc_cob_map <- function(species = "all", data = "nefsc"){
+map_nefsc_cob <- function(species = "all", data = "nefsc"){
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "nefsc")
+  species_list <- species.shift::species_list(source = "nefsc")
 
   # Base filter
   data <- data |>
@@ -200,16 +200,16 @@ nefsc_cob_map <- function(species = "all", data = "nefsc"){
 #'
 #' @description Function to calculate and plot the 5 year rolling means of the 5ht, 50th, and 95th percentiles of biomass-weighted latitude in the NEFSC Bottom Trawl Survey. Plots spring and fall independently.
 #'
-#' @param species Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`
+#' @param species Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`
 #' @param data Default is "nefsc". `pull_nefsc()` must be run prior in order to run this function.
 #' @return Faceted plot of spring and fall percentiles of distributions. Plots both rolling mean values and smoothed values. Selecting `all` species will return a list.
 #' @export
-#' @examples # nefsc_edges(species = "summer flounder", data = nefsc)
+#' @examples # plot_nefsc_edges(species = "summer flounder", data = nefsc)
 
-nefsc_edges <- function(species = "all", data = "nefsc"){
+plot_nefsc_edges <- function(species = "all", data = "nefsc"){
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "nefsc")
+  species_list <- species.shift::species_list(source = "nefsc")
 
   # Base filter
   data <- data |>
@@ -285,16 +285,16 @@ nefsc_edges <- function(species = "all", data = "nefsc"){
 #'
 #' @description Function to calculate the annual centers of biomass by season of Mid-Atlantic species and plot latitude and the distance between them.
 #'
-#' @param species Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`
+#' @param species Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`
 #' @param data Default is "nefsc". `pull_nefsc()` must be run prior in order to run this function.
 #' @return Plot of fall and spring centers of latitude. Selecting `all` species will return a list.
 #' @export
-#' @examples # nefsc_centers(species = "black sea bass", data = nefsc)
+#' @examples # plot_nefsc_centers(species = "black sea bass", data = nefsc)
 
-nefsc_centers <- function(species = "all", data = "nefsc"){
+plot_nefsc_centers <- function(species = "all", data = "nefsc"){
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "nefsc")
+  species_list <- species.shift::species_list(source = "nefsc")
 
   # Base filter
   data <- data |>
@@ -364,7 +364,7 @@ nefsc_centers <- function(species = "all", data = "nefsc"){
 #'
 #' @description Function to maps distributions of biomass in NEFSC Spring-Fall Bottom Trawl Survey. Color indicates `leading` and `trailing` 10% of kept catch, with `center`representing 80% of surveyed biomass. Yellow contours represent density.
 #'
-#' @param species Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`
+#' @param species Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`
 #' @param data Default is "nefsc" `nefsc` must be run and named "observer" in order to run this function.
 #' @return Map of distribution of biomass along the Northeast US. Selecting `all` species will return a list.
 #' @export
@@ -373,7 +373,7 @@ nefsc_centers <- function(species = "all", data = "nefsc"){
 map_nefsc <- function(species = "all", data = "nefsc"){
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "nefsc")
+  species_list <- species.shift::species_list(source = "nefsc")
 
   # Base filter
   data <- data |>

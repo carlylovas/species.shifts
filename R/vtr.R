@@ -53,7 +53,7 @@ pull_vtr <- function(proj_path){
 #'
 #' @description Function to plot distributions of kept catch using vessel trip report (VTR) data. Color indicates `leading` and `trailing` 10% of kept catch, with `center`representing 80% of kept catch. Yellow contours represent density. Distributions are cropped to management zones.
 #'
-#' @param species Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`
+#' @param species Default is "all", includes Mid-Atlantic species represented in `species.shifts::species_list()`
 #' @param data Default is "vtr." `pull_vtr` must be run and named "vtr" in order to run this function.
 #' @return Map of distribution of observed kept catch along the Northeast US. Selecting `all` species will return a list.
 #' @export
@@ -62,7 +62,7 @@ pull_vtr <- function(proj_path){
 map_vtr <- function(species = "all", data = "vtr"){
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "vtr")
+  species_list <- species.shifts::species_list(source = "vtr")
 
   # Base filter
   data <- vtr |>

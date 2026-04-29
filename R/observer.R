@@ -85,7 +85,7 @@ pull_observer <- function(proj_path){
 #'
 #' @description Function to plot distributions of kept catch using federal observer data. Color indicates `leading` and `trailing` 10% of kept catch, with `center`representing 80% of kept catch. Yellow contours represent density. Distributions are cropped to management zones.
 #'
-#' @param species Default is "all", includes Mid-Atlantic species represented in `speciesshifts::mid_atlantic_species()`
+#' @param species Default is "all", includes Mid-Atlantic species represented in `species.shifts::species_list()`
 #' @param data Default is "observer" `pull_observer` must be run and named "observer" in order to run this function.
 #' @return Map of distribution of observed catch along the Northeast US. Selecting `all` species will return a list.
 #' @export
@@ -94,7 +94,7 @@ pull_observer <- function(proj_path){
 map_observer <- function(species = "all", data = "observer"){
 
   # Get species list
-  species_list <- speciesshifts::mid_atlantic_species(source = "observer")
+  species_list <- species.shifts::species_list(source = "observer")
 
   # Base filter
   data <- data |>

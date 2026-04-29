@@ -9,9 +9,9 @@
 #' @return Data frame of landings by species, principal port and state, landings, live weight, value, latitude and longitude of principal port.
 #' @export
 #'
-#' @examples mid_atlantic_species(source = "all")
+#' @examples species_list(source = "all")
 #'
-mid_atlantic_species <- function(source = "all") {
+species_list <- function(source = "all") {
 
   data_sources <- c("all", "landings", "mrip", "observer", "permits", "nefsc", "vtr")
   if (!source %in% data_sources) {
@@ -108,4 +108,3 @@ mid_atlantic_species <- function(source = "all") {
   return(out)
 }
 
-mid_atlantic_species(source = "nefsc")
