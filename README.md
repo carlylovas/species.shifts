@@ -47,7 +47,12 @@ to generate a **summary report**, describing the patterns of
 distribution as described across the federal fishery dependent and
 independent data sets.
 
-## <img src="images/package_data_flow.svg" alt="" style="display: block; margin: auto;" />
+<p align="center">
+
+<img src="images/package_data_flow.svg">
+</p>
+
+------------------------------------------------------------------------
 
 ## Featured Data Sets
 
