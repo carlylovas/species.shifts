@@ -1,5 +1,6 @@
 ## VTR Data Pull and Clean ##
-# path <- "/Users/clovas/Library/CloudStorage/Box-Box/CONFIDENTIAL_GARFO_MAFMC_2025/VTR_and_Dealerdata_by_port_and_species_1964-2024/"
+# box_path  <- "/Users/clovas/Library/CloudStorage/Box-Box/MAFMC-25 Data/"
+# proj_path <- paste0(box_path, "Confidential/VTR and Dealer/")
 
 #' @title Pull federal VTR data
 #'
