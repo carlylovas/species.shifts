@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# species.shifts <a href="https://gmri.org"><img src="images/package_hex.svg" align="right" height="138" alt="gmri website" /></a>
+# species.shifts <a href="https://gmri.org"><img src="images/package_hex.svg" align="left" height="138" alt="gmri website" /></a>
 
 <!-- badges: start -->
 
@@ -47,9 +47,7 @@ to generate a **summary report**, describing the patterns of
 distribution as described across the federal fishery dependent and
 independent data sets.
 
-<img src="images/package_data_flow.svg" style="display: block; margin: 0 auto" />
-
-------------------------------------------------------------------------
+## <img src="images/package_data_flow.svg" alt="" style="display: block; margin: auto;" />
 
 ## Featured Data Sets
 
