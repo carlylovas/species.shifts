@@ -7,7 +7,7 @@
 
 <!-- badges: end -->
 
-The goal of {species.shifts} is to consolidate a variety of federal data
+The goal of `species.shifts` is to consolidate a variety of federal data
 sets commonly used by the [**Gulf of Maine Research
 Institute**](https://www.gmri.org/) in Portland, Maine. Many of the data
 sets support collaborations with the New England, Mid-Atlantic, and
