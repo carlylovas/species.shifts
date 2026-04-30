@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# species.shifts <a href="https://gmri.org"><img src="images/package_hex.svg" align="right" height="138" alt="gmri website" /></a>
+# species.shifts <a href="https://gmri.org"><img src="images/package_hex.svg" align="left" height="138" alt="gmri website" /></a>
 
 <!-- badges: start -->
 
@@ -35,8 +35,14 @@ All functions that begin with `map_()` or `plot_()` will filter to the species o
 
 All three groups of functions will ultimately yield the materials needed to generate a **summary report**, describing the patterns of distribution as described across the federal fishery dependent and independent data sets.
 
-<img src="images/package_data_flow.svg" style="display: block; margin: 0 auto" />
+```{r}
+#| echo: false
+#| fig-align: center
 
+knitr::include_graphics(path = "images/package_data_flow.svg")
+
+# <img src="images/package_data_flow.svg" style="display: block; margin: 0 auto" />
+```
 ------------------------------------------------------------------------
 
 ## Featured Data Sets
