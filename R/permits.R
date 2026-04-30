@@ -595,4 +595,3 @@ map_permits <- function(species = "all", data = "permits"){
     return(plots$out[[1]])
   }
 }
-

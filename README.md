@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# species.shifts <a href="https://gmri.org"><img src="images/package_hex.svg" align="left" height="138" alt="gmri website" /></a>
+# species.shifts <a href="https://carlylovas.com"><img src="images/package_hex.svg" align="left" height="138" alt="author website" /></a>
 
 <!-- badges: start -->
 
@@ -79,5 +79,9 @@ You can install the development version from [GitHub](www.github.com)
 with:
 
 ``` r
-devtools::install_github("https://github.com/carlylovas/speciesshifts")
+devtools::install_github("https://github.com/carlylovas/species.shifts")
 ```
+
+## Vignettes
+
+*In development*
