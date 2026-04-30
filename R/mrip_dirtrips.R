@@ -559,10 +559,3 @@ MRIP.dirtrips <- function(intdir = NULL, common = NULL, st = NULL, styr = NULL,
   )
 }
 
-# trips <- get_mrip_directed_trips(
-#     species    = c("STRIPED BASS", "SUMMER FLOUNDER"),
-#     states     = mid_atl,
-#     start_year = 2018,
-#     end_year   = 2022
-#   )
-# readr::write_csv(trips, here::here("mrip_example.csv"))
