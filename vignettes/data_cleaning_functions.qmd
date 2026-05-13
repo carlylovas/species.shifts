@@ -3,12 +3,20 @@ title: "Accessing and cleaning federal fisheries data"
 author: "Carly Lovas"
 format:
   html:
+    title-block-banner: "#236192"
     grid: 
-      body-width: 2000px
-      sidebar-width: 200px
-      margin-width: 200px
+      body-width: 1500px
+      sidebar-width: 450px
+      margin-width: 450px
     toc: true
     self-contained: true
+execute: 
+  echo: false
+  warning: false
+  message: false
+  error: true
+  comment: ""
+  fig-align: center
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{data_cleaning_functions}

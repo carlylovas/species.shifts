@@ -3,6 +3,11 @@ title: "Plotting federal fisheries data"
 author: "Carly Lovas"
 format:
   html:
+    title-block-banner: "#236192"
+    grid: 
+      body-width: 1500px
+      sidebar-width: 450px
+      margin-width: 450px
     toc: true
     self-contained: true
 execute: 
@@ -10,7 +15,6 @@ execute:
   warning: false
   message: false
   error: true
-  fig-keep: "all"
   comment: ""
   fig-align: center
 output: rmarkdown::html_vignette
@@ -65,6 +69,9 @@ plot_landings_trends(species = "summer flounder", data = obs)
 ```
 ```{r}
 #| label: landings trends
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
 
 knitr::include_graphics(here::here("images", "summer flounder landings.png"))
 ```
@@ -76,6 +83,9 @@ plot_state_landings(species = "summer flounder", data = landings)
 
 ```{r}
 #| label: landings by state
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
 knitr::include_graphics(here::here("images", "summer flounder state landings.png"))
 ```
 The council landings plotting function returns the *proportion of landings across management councils* for both landed value and volume.
@@ -85,6 +95,9 @@ plot_council_landings(species = "summer flounder", data = landings)
 
 ```{r}
 #| label: landings by council
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
 knitr::include_graphics(here::here("images", "summer flounder council landings.png"))
 ```
 
@@ -98,6 +111,9 @@ plot_state_permits(species = "summer flounder", data = permits)
 
 ```{r}
 #| label: permits by state
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
 knitr::include_graphics(here::here("images", "summer flounder permits.png"))
 ```
 
@@ -107,6 +123,9 @@ plot_council_permits(species = "summer flounder", data = permits)
 ```
 ```{r}
 #| label: permits by council
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
 knitr::include_graphics(here::here("images", "summer flounder permits by council.png"))
 ```
 
@@ -117,6 +136,9 @@ plot_permit_edges(species = "summer flounder", data = permits)
 
 ```{r}
 #| label: permits edges
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
 knitr::include_graphics(here::here("images", "summer flounder permit percentiles.png"))
 ```
 
