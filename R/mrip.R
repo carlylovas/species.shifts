@@ -49,23 +49,23 @@ pull_mrip_catch <- function(proj_path){
   )
 
   ## Catch estimates ----
-  data <- readr::read_csv(
-    here::here(
-      paste0(proj_path, "Catch_Estimates.csv")
-    )) |>
+  data <- readr::read_csv(proj_path) |>
     janitor::clean_names() |>
     dplyr::filter(year %in% seq(2010,2024)) |>
     dplyr::filter(pse_harvest_a_b1_numbers <= 30) |>
     dplyr::mutate(common_name = tolower(common_name),
            state  = stringr::str_to_title(state),
            state  = factor(state, levels = states_ns),
-           region = factor(region, levels = region_levels)) |>
+           region = factor(region, levels = region_levels))
+
+  data <- data |>
     dplyr::mutate(comname = sub("^(.*?),\\s*(.*)$", "\\2 \\1", data$common_name)) |>
     dplyr::mutate(
       comname = stringr::str_replace(comname, "shark, dogfish", "dogfish"),
       comname = stringr::str_replace(comname, "golden tilefish", "tilefish"),
       comname = stringr::str_replace(comname, "goosefish", "monkfish"),
     )
+  return(data)
 }
 
 #' ## Trend plots
