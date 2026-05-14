@@ -31,7 +31,7 @@ Suggests:
     ecodata,
     stars,
     tidyverse
-VignetteBuilder: knitr
+VignetteBuilder: quarto
 Imports:
     ggplot2 (>= 2.1.1),
     grDevices (>= 3.0.0),
