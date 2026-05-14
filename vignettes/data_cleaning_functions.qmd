@@ -72,7 +72,7 @@ knitr::kable(species.shifts::pull_vtr(proj_path = my_path) |>
                select(!sub_trip_id) |> 
                head(n = 3))
 ```
-*Trip ID information removed to maintain confidentiality for demonstration.
+*Trip ID information removed from demo to maintain confidentiality.
 
 ### Fisheries Observer
 `observer <- pull_observer(proj_path = my_path)`
@@ -89,7 +89,7 @@ knitr::kable(species.shifts::pull_observer(proj_path = my_path) |>
                select(!link3) |>
                head(n = 3))
 ```
-*Trip ID information removed to maintain confidentiality.
+*Trip ID information removed from demo to maintain confidentiality.
 
 ### NEFSC Bottom Trawl
 `nefsc <- pull_nefsc(proj_path = my_path)`
