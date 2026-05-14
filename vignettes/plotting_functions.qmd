@@ -34,10 +34,10 @@ library(tidyverse)
 library(species.shifts)
 
 ```
---------------------------------------------------------------------------------
-Upon running the respective [`pull_()`]() functions, subsequent `plot_()` and `map_()` functions will allow users to visualize the data for species featured in `species_list()`. It is *strongly* advised to save the outputs from the `pull_()` functions locally, as some of the data pulling functions take quite a while to run. Saving locally will ensure that plotting, and any minor aesthetic revisions are done quickly and efficiently.
+## About
+Upon running the respective [`pull_()`](https://carlylovas.github.io/species.shifts/vignettes/data_cleaning_functions.html) functions, subsequent `plot_()` and `map_()` functions will allow users to visualize the data for species featured in `species_list()`. It is *strongly* advised to save the outputs from the `pull_()` functions locally, as some of the data pulling functions take quite a while to run. Saving locally will ensure that plotting, and any minor aesthetic revisions are done quickly and efficiently.
 
-Below are examples of plots and maps that can be generated for each federal data set. All functions are written within the [tidyverse](https://tidyverse.org/) and can be edited with a introductory understanding of R.
+Below are examples of plots and maps that can be generated for each federal data set. All functions are written within [tidyverse](https://tidyverse.org/) and can be edited with a intermediate understanding of R.
 
 ## Vessel Trip Reports
 The plotting function for the vessel trip reports yields a four-paneled map, which depicts the leading and trailing edges of catch distribution. These edges are represented by the 10th and 90th percentiles of latitude, weighted by kept catch. The center represent 80% of kept catch. The yellow contour lines represent density of kept catch, which closer lines representing greater density of activity. The VTR data has been cropped to the management councils to minimize the effects of outliers and inaccurate reports. 
@@ -185,3 +185,4 @@ plot_directed_trips(species = "summer flounder", data = directed_trips)
 #| label: directed trips
 knitr::include_graphics(here::here("images", "summer flounder directed trips.png"))
 ```
+------------------------------------------------------------------------------------

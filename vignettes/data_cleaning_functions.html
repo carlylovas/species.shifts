@@ -2210,6 +2210,7 @@ background: #236192;
   <li><a href="#garfo-dealer-reported-landings" id="toc-garfo-dealer-reported-landings" class="nav-link" data-scroll-target="#garfo-dealer-reported-landings">GARFO Dealer-reported landings</a></li>
   <li><a href="#marine-recreational-information-program" id="toc-marine-recreational-information-program" class="nav-link" data-scroll-target="#marine-recreational-information-program">Marine Recreational Information Program</a></li>
   </ul></li>
+  <li><a href="#plotting" id="toc-plotting" class="nav-link" data-scroll-target="#plotting">Plotting</a></li>
   </ul>
 </nav>
 </div>
@@ -2221,7 +2222,7 @@ background: #236192;
 
 <section id="about" class="level2">
 <h2 class="anchored" data-anchor-id="about">About</h2>
-<p>This package contains various functions for accessing (pulling) and cleaning federal fisheries dependent and independent data. Many of these data sets are confidential and require a formal data request submitting to the appropriate governing body. Information regarding metadata and access for most of these data sets can be accessed on <a href="https://www.fisheries.noaa.gov/inport/">inPort</a>, see below:</p>
+<p>This package contains various functions for accessing (pulling) and cleaning federal fisheries dependent and independent data. Many of these data sets are confidential and require a formal data request submission to the appropriate governing body. Information regarding metadata and access for most of these data sets can be accessed via <a href="https://www.fisheries.noaa.gov/inport/">inPort</a>, see below:</p>
 <blockquote class="blockquote">
 <p>InPort is the authoritative metadata repository and data inventory platform for NOAA Fisheries and the National Ocean Service. The system supports documentation of datasets and provides tools to facilitate data discovery, public access, and responsible stewardship of scientific data within these line offices.</p>
 </blockquote>
@@ -2236,6 +2237,7 @@ background: #236192;
 <p><a href="https://apps-garfo.fisheries.noaa.gov/permits/">GARFO Permits Data</a></p>
 <p><a href="https://www.fisheries.noaa.gov/contact/greater-atlantic-regional-fisheries-office">GARFO Dealer Reported Landings</a></p>
 <p><a href="https://www.fisheries.noaa.gov/insight/marine-recreational-information-program">NOAA Fisheries Marine Recreational Information Program</a></p>
+<hr>
 <section id="vessel-trip-reports" class="level3">
 <h3 class="anchored" data-anchor-id="vessel-trip-reports">Vessel trip reports</h3>
 <p><code>vtr &lt;- pull_vtr(proj_path = my_path)</code></p>
@@ -2859,6 +2861,10 @@ background: #236192;
 </div>
 </section>
 </section>
+</section>
+<section id="plotting" class="level2">
+<h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
+<p>Once the data has been pulled and saved to the local environment, each data set has a respective <code>plot_()</code> or <code>map_()</code> function. More about those functions <a href="https://carlylovas.github.io/species.shifts/vignettes/plotting_functions.html">here</a>.</p>
 </section>
 
 </main>
