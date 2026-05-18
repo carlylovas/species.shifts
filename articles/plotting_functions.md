@@ -6,11 +6,11 @@ Upon running the respective
 [`pull_()`](https://carlylovas.github.io/species.shifts/vignettes/data_cleaning_functions.html)
 functions, subsequent `plot_()` and `map_()` functions will allow users
 to visualize the data for species featured in
-[`species_list()`](../reference/species_list.md). It is *strongly*
-advised to save the outputs from the `pull_()` functions locally, as
-some of the data pulling functions take quite a while to run. Saving
-locally will ensure that plotting, and any minor aesthetic revisions are
-done quickly and efficiently.
+[`species_list()`](https://carlylovas.github.io/species.shifts/reference/species_list.md).
+It is *strongly* advised to save the outputs from the `pull_()`
+functions locally, as some of the data pulling functions take quite a
+while to run. Saving locally will ensure that plotting, and any minor
+aesthetic revisions are done quickly and efficiently.
 
 Below are examples of plots and maps that can be generated for each
 federal data set. All functions are written within

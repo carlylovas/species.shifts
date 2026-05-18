@@ -19,12 +19,13 @@ There are a set of functions within this package to pull, clean, and
 plot federal fisheries data. Any `pull_()` function will read in and
 clean the data from the corresponding data set.
 
-[`species_list()`](reference/species_list.md) contains a list of species
-that are of interest to the [Mid-Atlantic Fisheries Management
-Council](https://www.mafmc.org/). It contains how these species are
-named in each particular data set and a `clean_name`, which is the same
-across all data sets. If species need to be added or removed before
-subsequent analyses, please amend this function as needed.
+[`species_list()`](https://carlylovas.github.io/species.shifts/reference/species_list.md)
+contains a list of species that are of interest to the [Mid-Atlantic
+Fisheries Management Council](https://www.mafmc.org/). It contains how
+these species are named in each particular data set and a `clean_name`,
+which is the same across all data sets. If species need to be added or
+removed before subsequent analyses, please amend this function as
+needed.
 
 All functions that begin with `map_()` or `plot_()` will filter to the
 species of interest, so long as they are included in the species list.
@@ -65,7 +66,8 @@ Program](https://www.fisheries.noaa.gov/insight/marine-recreational-information-
 
 ## Installation
 
-You can install the development version from [GitHub](www.github.com)
+You can install the development version from
+[GitHub](https://carlylovas.github.io/species.shifts/www.github.com)
 with:
 
 ``` r

@@ -2,7 +2,12 @@
 
 ## Authors
 
-- **Carly Lovas**. Author, maintainer.
+- **[Carly Lovas](https://carlylovas.com)**. Author, maintainer.
+  [](https://orcid.org/0009-0002-8121-7684)
+
+- **Adam Kemberling**. Contributor.
+
+- **Gulf of Maine Research Insitute**. Funder.
 
 ## Citation
 
