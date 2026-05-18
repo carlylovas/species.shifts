@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# species.shifts <img src="images/package_hex.svg" align="left" height="138" /></a>
+# species.shifts <img src="vignettes/images/package_hex.svg" align="left" height="138" /></a>
 
 <!-- badges: start -->
 
@@ -49,7 +49,7 @@ independent data sets.
 
 <p align="center">
 
-<img src="images/package_data_flow.svg">
+<img src="vignettes/images/package_data_flow.svg">
 </p>
 
 ------------------------------------------------------------------------
