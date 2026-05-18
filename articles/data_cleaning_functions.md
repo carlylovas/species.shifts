@@ -77,8 +77,9 @@ Program](https://www.fisheries.noaa.gov/insight/marine-recreational-information-
 
 `permits <- pull_permits(proj_path = my_path)`
 
-    Error in `loadNamespace()`:
-    ! there is no package called 'here'
+    Error:
+    ! '/home/runner/work/species.shifts/species.shifts/permits_data.csv'
+      does not exist.
 
 ### GARFO Dealer-reported landings
 
@@ -93,8 +94,9 @@ Program](https://www.fisheries.noaa.gov/insight/marine-recreational-information-
 
 `mrip_directed_trips <- pull_mrip_directed_trips()`
 
-    Error in `loadNamespace()`:
-    ! there is no package called 'here'
+    Error:
+    ! '/home/runner/work/species.shifts/species.shifts/mrip_example.csv'
+      does not exist.
 
 #### Catch estimates
 

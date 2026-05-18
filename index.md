@@ -1,4 +1,4 @@
-# species.shifts [![author website](images/package_hex.svg)](https://carlylovas.com)
+# species.shifts ![](images/package_hex.svg)
 
 The goal of `species.shifts` is to consolidate a variety of federal data
 sets commonly used by the [**Gulf of Maine Research
