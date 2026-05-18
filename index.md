@@ -1,4 +1,4 @@
-# species.shifts ![](images/package_hex.svg)
+# species.shifts ![](articles/images/package_hex.svg)
 
 The goal of `species.shifts` is to consolidate a variety of federal data
 sets commonly used by the [**Gulf of Maine Research
@@ -40,7 +40,7 @@ to generate a **summary report**, describing the patterns of
 distribution as described across the federal fishery dependent and
 independent data sets.
 
-![](images/package_data_flow.svg)
+![](articles/images/package_data_flow.svg)
 
 ------------------------------------------------------------------------
 
