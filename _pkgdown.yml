@@ -1,0 +1,5 @@
+# Preview your site locally before publishing
+pkgdown::build_site()url: https://carlylovas.github.io/species.shifts/
+template:
+  bootstrap: 5
+

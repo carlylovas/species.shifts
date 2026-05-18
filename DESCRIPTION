@@ -46,5 +46,5 @@ Imports:
     janitor,
     readr,
     tidyr
-URL: https://github.com/carlylovas/species.shifts
+URL: https://github.com/carlylovas/species.shifts, https://carlylovas.github.io/species.shifts/
 BugReports: https://github.com/carlylovas/species.shifts/issues
