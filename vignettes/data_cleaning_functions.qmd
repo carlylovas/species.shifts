@@ -120,7 +120,7 @@ knitr::kable(species.shifts::pull_nefsc(proj_path = my_path) |>
 #| echo: false
 
 knitr::kable(readr::read_csv(
-  here::here("permits_data.csv")
+  here::here("vignettes","permits_data.csv")
 ) |>
   head(n = 3))
 ```
@@ -154,7 +154,7 @@ knitr::kable(species.shifts::pull_garfo_landings(proj_path = my_path, sheet = 1,
 #| echo: false
 
 knitr::kable(readr::read_csv(
-  here::here("mrip_example.csv")
+  here::here("vignettes","mrip_example.csv")
 ) |>
   head(n = 3))
 ```

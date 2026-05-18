@@ -1,85 +1,3 @@
-## Catch estimates and plotting ##
-### Pulls ACCSP Catch Estimate Data from a central repo ###
-### Access public non-confidential data here: https://safis.accsp.org/accsp_prod/f?p=1490:2211:17151574143887 ###
-
-# box_path  <- "/Users/clovas/Library/CloudStorage/Box-Box/MAFMC-25 Data/"
-# proj_path <- paste0(box_path, "Non-confidential/ACCSP/Catch_Estimates.csv")
-
-## Data pull ----
-
-#' @title Pull federal MRIP catch estimates
-#'
-#' @description Function to pull and clean recreational catch estimates. Data can be acquired from the ACCSP Data Warehouse. Please download as 'Catch_Estimates.csv'
-#'
-#' @param proj_path Local path to data file
-#' @return Data frame of catch estimates. Please refer to [MRIP Data Dictionary](https://www.fisheries.noaa.gov/s3//2025-03/MRIP-Data-User-Handbook_March_2025_update.pdf.pdf) for more information regarding estimates.
-#' @export
-#' @examples # catch <- pull_mrip_catch(proj_path = proj_path)
-#'
-
-pull_mrip_catch <- function(proj_path){
-
-  # States, listed north to south
-  states_ns <- c(
-    "Maine",
-    "New Hampshire",
-    "Massachusetts",
-    "Rhode Island",
-    "Connecticut",
-    "New York",
-    "New Jersey",
-    "Pennsylvania",
-    "Delaware",
-    "Maryland",
-    "Virginia",
-    "North Carolina",
-    "South Carolina",
-    "Georgia",
-    "Florida",
-    "Alabama",
-    "Mississippi",
-    "Louisiana"
-  )
-
-  region_levels <- c(
-    "North Atlantic",
-    "Mid Atlantic",
-    "South Atlantic",
-    "Gulf of Mexico"
-  )
-
-  ## Catch estimates ----
-  data <- readr::read_csv(proj_path) |>
-    janitor::clean_names() |>
-    dplyr::filter(year %in% seq(2010,2024)) |>
-    dplyr::filter(pse_harvest_a_b1_numbers <= 30) |>
-    dplyr::mutate(common_name = tolower(common_name),
-           state  = stringr::str_to_title(state),
-           state  = factor(state, levels = states_ns),
-           region = factor(region, levels = region_levels))
-
-  data <- data |>
-    dplyr::mutate(comname = sub("^(.*?),\\s*(.*)$", "\\2 \\1", data$common_name)) |>
-    dplyr::mutate(
-      comname = stringr::str_replace(comname, "shark, dogfish", "dogfish"),
-      comname = stringr::str_replace(comname, "golden tilefish", "tilefish"),
-      comname = stringr::str_replace(comname, "goosefish", "monkfish"),
-    )
-  return(data)
-}
-
-## Trend plots
-#' @title MRIP Catch Estimate Trends
-#'
-#' @description Function to calculate trends and summarise into an aesthetic table.
-#'
-#' @param species Mid-Atlantic managed species as listed in `species_list(source = "permits")`
-#' @param data Landings outputs from `pull_mrip_catch()`
-#' @return gtable of recreational harvest trends
-#' @import
-#' @export
-#' @example # not run
-#'
 plot_catch_trends <- function(species = "all", catch_data) {
 
   # Get species list
@@ -89,15 +7,13 @@ plot_catch_trends <- function(species = "all", catch_data) {
   catch_data <- catch_data |>
     dplyr::right_join(species_list)
 
-  # Determine which species to process
-  target_species <- if (species == "all") {
-    unique(catch_data$clean_name)
-  } else {
-    if (!species %in% catch_data$clean_name) {
-      message("Species '", species, "' not found in catch data.")
+  # Validate and filter early if specific species requested
+  if (species != "all") {
+    if (!species %in% data$comname) {
+      message("Species '", species, "' not found in landings data.")
       return(NULL)
     }
-    species
+    catch_data <- catch_data |> dplyr::filter(comname == species)
   }
 
   region_levels <- c("North Atlantic", "Mid Atlantic", "South Atlantic", "Gulf of Mexico")
@@ -110,44 +26,37 @@ plot_catch_trends <- function(species = "all", catch_data) {
   )
 
   # Build per-species catch data
-  shortlist_catch <- purrr::map(
-    setNames(target_species, target_species),
-    function(x) {
-      species_x <- catch_data |>
-        dplyr::filter(tolower(clean_name) == tolower(x))
-
-      species_x |>
-        tidyr::expand(year, state) |>
-        dplyr::left_join(species_x, by = c("year", "state")) |>
-        dplyr::mutate(
-          harvest_a_b1_numbers = dplyr::if_else(
-            is.na(harvest_a_b1_numbers), 0, harvest_a_b1_numbers),
-          total_catch_a_b1_b2_numbers = dplyr::if_else(
-            is.na(total_catch_a_b1_b2_numbers), 0, total_catch_a_b1_b2_numbers),
-          region = dplyr::case_when(
-            state %in% c("Maine", "New Hampshire", "Massachusetts",
-                         "Rhode Island", "Connecticut")           ~ "North Atlantic",
-            state %in% c("New York", "New Jersey", "Delaware",
-                         "Maryland", "Virginia")                  ~ "Mid Atlantic",
-            state %in% c("North Carolina", "South Carolina",
-                         "Georgia", "Florida")                    ~ "South Atlantic",
-            state %in% c("Alabama", "Mississippi",
-                         "Louisiana", "Texas")                    ~ "Gulf of Mexico"),
+  species_catch <- catch_data |>
+    dplyr::group_by(comname) |>
+    tidyr::expand(year, state) |>
+    dplyr::left_join(catch_data, by = c("year", "state")) |>
+    dplyr::mutate(
+      harvest_a_b1_numbers = dplyr::if_else(
+        is.na(harvest_a_b1_numbers), 0, harvest_a_b1_numbers),
+      total_catch_a_b1_b2_numbers = dplyr::if_else(
+        is.na(total_catch_a_b1_b2_numbers), 0, total_catch_a_b1_b2_numbers),
+      region = dplyr::case_when(
+        state %in% c("Maine", "New Hampshire", "Massachusetts",
+                     "Rhode Island", "Connecticut")           ~ "North Atlantic",
+        state %in% c("New York", "New Jersey", "Delaware",
+                     "Maryland", "Virginia")                  ~ "Mid Atlantic",
+        state %in% c("North Carolina", "South Carolina",
+                     "Georgia", "Florida")                    ~ "South Atlantic",
+        state %in% c("Alabama", "Mississippi",
+                     "Louisiana", "Texas")                    ~ "Gulf of Mexico"),
           region = factor(region, levels = region_levels)
         )|>
         dplyr::filter(!region == "Gulf of Mexico")
-    }
-  )
 
   # Compute trends per species
-  shortlist_trends <- purrr::map(shortlist_catch, function(x) {
+  # shortlist_trends <- purrr::map(shortlist_catch, function(x) {
 
-    prepped <- x |>
+    prepped <- species_catch |>
       dplyr::group_by(year) |>
       dplyr::summarise(
         total_catch_annual = sum(harvest_a_b1_numbers, na.rm = TRUE),
         .groups = "drop") |>
-      dplyr::left_join(x, by = "year") |>
+      dplyr::left_join(species_catch, by = "year") |>
       dplyr::mutate(
         region_state = stringr::str_c(region, state, sep = "_"),
         harvest_frac = round(harvest_a_b1_numbers / total_catch_annual, 2) * 100,
@@ -160,7 +69,7 @@ plot_catch_trends <- function(species = "all", catch_data) {
 
     purrr::map_dfr(state_list, function(state_df) {
 
-      x_ts <- state_df |>
+      x_ts <- state_list |>
         dplyr::arrange(year) |>
         tail(15)
 
@@ -218,7 +127,7 @@ plot_catch_trends <- function(species = "all", catch_data) {
       dplyr::arrange(region, state)
   })
 
-   #return(shortlist_trends)
+  #return(shortlist_trends)
 
   out <- shortlist_trends |>
     purrr::imap(function(trends_x, species_x){
@@ -232,7 +141,7 @@ plot_catch_trends <- function(species = "all", catch_data) {
             stringr::str_c(
               "Species of Interest: ",
               stringr::str_to_title(species_x)
-              )),
+            )),
           subtitle =  "MRIP Recreational Catch Trends of the Last 15 Years")  |>
         gt::tab_options(row_group.as_column = T)  |>
         # Add a Sparkline for catch

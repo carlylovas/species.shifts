@@ -2,8 +2,12 @@ Package: species.shifts
 Type: Package
 Title: Northeast US Marine Species Distribution Shifts
 Version: 0.1.0
-Authors@R: (person("Carly", "Lovas", role = c("aut", "cre"),
-                     email = "carly.lovas@gmail.com"))
+Authors@R: c(
+    person("Carly", "Lovas", , "carly.lovas@gmail.com", role = c("aut", "cre"),
+                    comment = c(ORCID = "0009-0002-8121-7684")),
+    person("Adam", "Kemberling", role = "ctb"),
+    person("Gulf of Maine Research Insitute", role = "fnd")
+    )
 Author: Carly Lovas [aut, cre]
 Description: The goal of {species.shifts} is to consolidate a variety 
   of federal data sets commonly used by the Gulf of Maine Research Institute 

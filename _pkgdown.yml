@@ -1,5 +1,13 @@
-# Preview your site locally before publishing
-pkgdown::build_site()url: https://carlylovas.github.io/species.shifts/
+url: https://carlylovas.github.io/species.shifts/
+
+home:
+  title: Northeast US Marine Species Distribution Shifts
+
+authors:
+  Carly Lovas:
+    href: https://carlylovas.com
+
 template:
   bootstrap: 5
 output: rmarkdown::html_vignette
+
