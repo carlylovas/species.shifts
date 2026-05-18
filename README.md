@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# species.shifts <a href="https://carlylovas.com"><img src="images/package_hex.svg" align="left" height="138" alt="author website" /></a>
+# species.shifts <img src="images/package_hex.svg" align="left" height="138" /></a>
 
 <!-- badges: start -->
 
