@@ -28,7 +28,6 @@ Suggests:
     stringr,
     tibble,
     data.table,
-    ecodata,
     stars,
     tidyverse
 VignetteBuilder: quarto
