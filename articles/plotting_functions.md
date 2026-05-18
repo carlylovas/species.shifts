@@ -1,0 +1,195 @@
+# Plotting federal fisheries data
+
+## About
+
+Upon running the respective
+[`pull_()`](https://carlylovas.github.io/species.shifts/vignettes/data_cleaning_functions.html)
+functions, subsequent `plot_()` and `map_()` functions will allow users
+to visualize the data for species featured in
+[`species_list()`](../reference/species_list.md). It is *strongly*
+advised to save the outputs from the `pull_()` functions locally, as
+some of the data pulling functions take quite a while to run. Saving
+locally will ensure that plotting, and any minor aesthetic revisions are
+done quickly and efficiently.
+
+Below are examples of plots and maps that can be generated for each
+federal data set. All functions are written within
+[tidyverse](https://tidyverse.org/) and can be edited with a
+intermediate understanding of R.
+
+## Vessel Trip Reports
+
+The plotting function for the vessel trip reports yields a four-paneled
+map, which depicts the leading and trailing edges of catch distribution.
+These edges are represented by the 10th and 90th percentiles of
+latitude, weighted by kept catch. The center represent 80% of kept
+catch. The yellow contour lines represent density of kept catch, which
+closer lines representing greater density of activity. The VTR data has
+been cropped to the management councils to minimize the effects of
+outliers and inaccurate reports.
+
+``` r
+vtr <- pull_vtr(proj_path = my_path)
+map_vtr(species = summer flounder", data = vtr)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+## Fisheries Observer
+
+Similiar to the vessel trip reports, these maps represent the leading
+and trailing edges of observations. These again are the 10th and 90th
+percentile of reported latitudes, weighted by the live weight (biomass)
+of fish observed. The center represents 80% of observed biomass and the
+contour lines depict the density of observations.
+
+``` r
+obs <- pull_obs(proj_path = my_path)
+map_obs(species = summer flounder", data = obs)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+## GARFO Dealer Data
+
+There are multiple plotting functions to visualize dealer reported
+federal landings. The first of which shows the overall trends in lan ded
+volume (weight) and value for a particular species across the east coast
+of the United States.
+
+``` r
+
+landings <- pull_garfo_landings(proj_path = my_path)
+plot_landings_trends(species = "summer flounder", data = obs) 
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+The state landings plotting function returns the *proportion of landings
+across states* for both landed value and volume.
+
+``` r
+
+plot_state_landings(species = "summer flounder", data = landings)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+The council landings plotting function returns the *proportion of
+landings across management councils* for both landed value and volume.
+
+``` r
+
+plot_council_landings(species = "summer flounder", data = landings)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+## GARFO Federal Permits
+
+Similar to the landings plotting functions, there are multiple plotting
+functions for the permits data. The state permits plotting function
+returns the *proportion of landings across states* of the various types
+of federal permits for a particular species.
+
+``` r
+
+permits <- pull_permits(proj_path = my_path)
+plot_state_permits(species = "summer flounder", data = permits)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+The council permits plotting function returns the *proportion of
+landings across management councils* of the various types of federal
+permits for a particular species.
+
+``` r
+
+plot_council_permits(species = "summer flounder", data = permits)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+`plot_permit_edges` returns the 5th, 50th, and 95th percentiles of
+latitude weighted by number of permits issues by permit type for a
+particular species.
+
+``` r
+
+plot_permit_edges(species = "summer flounder", data = permits)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+The mapping function for the federal permits data returns maps faceted
+by decade and permit type for a particular species, with points
+representing the reported principal port for each issued permit.
+
+``` r
+
+map_permits(species = "summer flounder", data = permits)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+## NEFSC Bottom Trawl
+
+Given the wide breadth of fishery-indepented information provided by the
+federal bottom trawl survey, this data set has multiple plotting and
+mapping functions associated with it.
+
+``` r
+
+map_nefsc_cob()
+map_nefsc()
+plot_nefsc_centers()
+plot_nefsc_edges()
+```
+
+## Marine Recreational Information Program
+
+### Catch estimates
+
+Catch estimates, different from directed trip estimates, provided an
+estimate on the amount of recreational species harvested. The plotting
+function for catch estimate returns a summary table, describing the
+presence, total harvest, harvest trends, and proportions of harvest for
+a particular species.
+
+``` r
+
+catch <- pull_mrip_catch(proj_path = my_path)
+plot_catch_estimates(species = "summer flounder", data = catch)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+### Directed trips
+
+Similar to catch estimates, directed trips gives a rough estimate of the
+recreational fishing effort for a particular species. The directed trips
+plotting function also returns a summary table, depicting the
+proportions of directed trips by state, fishing area, trip type, and
+trends over time.
+
+``` r
+
+directed_trips <- get_mrip_directed_trips()
+plot_directed_trips(species = "summer flounder", data = directed_trips)
+```
+
+    Error in `loadNamespace()`:
+    ! there is no package called 'here'
+
+------------------------------------------------------------------------

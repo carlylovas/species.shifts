@@ -1,0 +1,35 @@
+# Plot edges of distribution
+
+Function to calculate and plot the 5 year rolling means of the 5ht,
+50th, and 95th percentiles of biomass-weighted latitude in the NEFSC
+Bottom Trawl Survey. Plots spring and fall independently.
+
+## Usage
+
+``` r
+plot_nefsc_edges(species = "all", data = "nefsc")
+```
+
+## Arguments
+
+- species:
+
+  Default is "all", includes Mid-Atlantic species represented in
+  \`species.shift::species_list()\`
+
+- data:
+
+  Default is "nefsc". \`pull_nefsc()\` must be run prior in order to run
+  this function.
+
+## Value
+
+Faceted plot of spring and fall percentiles of distributions. Plots both
+rolling mean values and smoothed values. Selecting \`all\` species will
+return a list.
+
+## Examples
+
+``` r
+# plot_nefsc_edges(species = "summer flounder", data = nefsc)
+```
