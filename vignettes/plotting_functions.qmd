@@ -154,6 +154,7 @@ knitr::include_graphics(here::here("images/summer flounder permit map.png"))
 ```
 
 ## NEFSC Bottom Trawl
+*In development*
 Given the wide breadth of fishery-indepented information provided by the federal bottom trawl survey, this data set has multiple plotting and mapping functions associated with it. 
 ``` r
 map_nefsc_cob()

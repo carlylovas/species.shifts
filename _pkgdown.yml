@@ -1,6 +1,9 @@
 url: https://carlylovas.github.io/species.shifts/
 template:
   bootstrap: 5
+  bslib:
+    bootswatch: cosmo
+    pkgdown-nav-height: 100px
 # navbar:
 #   structure:
 #     left: [intro, articles, reference, news]

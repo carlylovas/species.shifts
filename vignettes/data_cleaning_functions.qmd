@@ -135,6 +135,7 @@ knitr::kable(read.csv(here::here("data","examples","nefsc.csv")))
 knitr::kable(read.csv(here::here("data","examples","permits.csv")))
 ```
 
+
 ### GARFO Dealer-reported landings
 
 `landings <- pull_landings(proj_path = my_path)`
@@ -145,11 +146,14 @@ knitr::kable(read.csv(here::here("data","examples","permits.csv")))
 #| warning: false
 #| echo: false
 
-my_path <- paste0(box_path, "Confidential/VTR and Dealer/Dealer Data 2025.xlsx")
-knitr::kable(species.shifts::pull_garfo_landings(proj_path = my_path, sheet = 1, skip = 9) |>
-               filter(is.na(confidential)) |>
-               head(n = 3))
+# my_path <- paste0(box_path, "Confidential/VTR and Dealer/Dealer Data 2025.xlsx")
+# knitr::kable(species.shifts::pull_garfo_landings(proj_path = my_path, sheet = 1, skip = 9) |>
+#                filter(is.na(confidential)) |>
+#                head(n = 3))
+knitr::kable(read.csv(here::here("data","examples","landings.csv")))
+
 ```
+
 
 ### Marine Recreational Information Program
 
@@ -189,6 +193,7 @@ knitr::kable(read.csv(here::here("data","examples","catch.csv")))
 
 
 ```
+
 
 ## Plotting
 
