@@ -31,6 +31,7 @@ vignette: >
 #| echo: false
 
 library(tidyverse)
+library(here)
 library(species.shifts)
 
 box_path <- "/Users/clovas/Library/CloudStorage/Box-Box/MAFMC-25 Data/"

@@ -6,7 +6,7 @@ Authors@R: c(
     person("Carly", "Lovas", , "carly.lovas@gmail.com", role = c("aut", "cre"),
                     comment = c(ORCID = "0009-0002-8121-7684")),
     person("Adam", "Kemberling", role = "ctb"),
-    person("Gulf of Maine Research Insitute", role = "fnd")
+    person("Gulf of Maine Research Institute", role = "fnd")
     )
 Author: Carly Lovas [aut, cre]
 Description: The goal of {species.shifts} is to consolidate a variety 
