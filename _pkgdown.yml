@@ -12,4 +12,4 @@ navbar:
           href: articles/data_cleaning_functions.html
         - text: Plotting federal fisheries data
           href: articles/plotting_functions.html
-    reference:
+
