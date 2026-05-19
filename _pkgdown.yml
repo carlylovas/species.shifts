@@ -1,4 +1,12 @@
 url: https://carlylovas.github.io/species.shifts/
 template:
   bootstrap: 5
+articles:
+  - title: "Articles"
+    contents:
+      - data_cleaning_functions   # listed for nav, but excluded from build below
+      - plotting_functions
 
+vignettes:
+  exclude:
+    - data_cleaning_functions.Rmd
