@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# species.shifts <a href="https://carlylovas.github.io/species.shifts/"><img src="man/figures/logo.svg" align="right" height="139" alt="species.shifts website" /></a>
+## species.shifts <a href="https://carlylovas.github.io/species.shifts/"><img src="man/figures/logo.svg" alt="species.shifts website" align="left" height="150"/></a>
 
 <!-- badges: start -->
 
@@ -47,11 +47,11 @@ to generate a **summary report**, describing the patterns of
 distribution as described across the federal fishery dependent and
 independent data sets.
 
-<p align="center">
+<div align="center">
 
-<img src="man/figures/package_data_flow.svg" align="center"/>
+<img src="man/figures/package_data_flow.svg">
 
-</p>
+</div>
 
 ------------------------------------------------------------------------
 
