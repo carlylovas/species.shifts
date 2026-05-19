@@ -8,12 +8,11 @@ output: github_document
 #| echo: false
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "images/package_"
+  comment = "#>"
 )
 ```
 
-# species.shifts <img src="vignettes/images/package_hex.svg" align="left" height="138" /></a>
+# species.shifts <img src="images/package_hex.svg" align="left" height="138" /></a>
 
 <!-- badges: start -->
 
@@ -37,7 +36,7 @@ All three groups of functions will ultimately yield the materials needed to gene
 
 
 <p align="center">
-  <img src="vignettes/images/package_data_flow.svg">
+  <img src="images/package_data_flow.svg">
 </p>
 
 

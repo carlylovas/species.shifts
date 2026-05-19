@@ -43,11 +43,11 @@ Below are examples of plots and maps that can be generated for each federal data
 The plotting function for the vessel trip reports yields a four-paneled map, which depicts the leading and trailing edges of catch distribution. These edges are represented by the 10th and 90th percentiles of latitude, weighted by kept catch. The center represent 80% of kept catch. The yellow contour lines represent density of kept catch, which closer lines representing greater density of activity. The VTR data has been cropped to the management councils to minimize the effects of outliers and inaccurate reports. 
 ``` r
 vtr <- pull_vtr(proj_path = my_path)
-map_vtr(species = summer flounder", data = vtr)
+map_vtr(species = "summer flounder", data = vtr)
 ```
 ```{r}
 #| label: vtr
-knitr::include_graphics(here::here("images", "summer flounder vtr.png"))
+knitr::include_graphics("images/summer flounder vtr.png")
 ```
 
 ## Fisheries Observer
@@ -58,7 +58,7 @@ map_obs(species = summer flounder", data = obs)
 ```
 ```{r}
 #| label: obs
-knitr::include_graphics(here::here("images", "summer flounder observer map.png"))
+knitr::include_graphics("images/summer flounder observer map.png")
 ```
 
 ## GARFO Dealer Data
@@ -73,7 +73,7 @@ plot_landings_trends(species = "summer flounder", data = obs)
 #| out-width: 700px
 #| out-height: 400px
 
-knitr::include_graphics(here::here("images", "summer flounder landings.png"))
+knitr::include_graphics("images/summer flounder landings.png")
 ```
 
 The state landings plotting function returns the *proportion of landings across states* for both landed value and volume.
@@ -86,7 +86,7 @@ plot_state_landings(species = "summer flounder", data = landings)
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images", "summer flounder state landings.png"))
+knitr::include_graphics("images/summer flounder state landings.png")
 ```
 The council landings plotting function returns the *proportion of landings across management councils* for both landed value and volume.
 ``` r
@@ -98,7 +98,7 @@ plot_council_landings(species = "summer flounder", data = landings)
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images", "summer flounder council landings.png"))
+knitr::include_graphics("images/summer flounder council landings.png")
 ```
 
 ## GARFO Federal Permits
@@ -114,7 +114,7 @@ plot_state_permits(species = "summer flounder", data = permits)
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images", "summer flounder permits.png"))
+knitr::include_graphics("images/summer flounder permits.png")
 ```
 
 The council permits plotting function returns the *proportion of landings across management councils* of the various types of federal permits for a particular species.
@@ -126,7 +126,7 @@ plot_council_permits(species = "summer flounder", data = permits)
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images", "summer flounder permits by council.png"))
+knitr::include_graphics("images/summer flounder permits by council.png")
 ```
 
 `plot_permit_edges` returns the 5th, 50th, and 95th percentiles of latitude weighted by number of permits issues by permit type for a particular species. 
@@ -139,7 +139,7 @@ plot_permit_edges(species = "summer flounder", data = permits)
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images", "summer flounder permit percentiles.png"))
+knitr::include_graphics("images/summer flounder permit percentiles.png")
 ```
 
 The mapping function for the federal permits data returns maps faceted by decade and permit type for a particular species, with points representing the reported principal port for each issued permit. 
@@ -149,7 +149,7 @@ map_permits(species = "summer flounder", data = permits)
 
 ```{r}
 #| label: permit maps
-knitr::include_graphics(here::here("images", "summer flounder permit map.png"))
+knitr::include_graphics("images/summer flounder permit map.png")
 ```
 
 ## NEFSC Bottom Trawl
@@ -171,7 +171,7 @@ plot_catch_estimates(species = "summer flounder", data = catch)
 
 ```{r}
 #| label: catch estimate
-knitr::include_graphics(here::here("images", "summer flounder catch.png"))
+knitr::include_graphics("images/summer flounder catch.png")
 ```
 
 ### Directed trips
@@ -183,6 +183,6 @@ plot_directed_trips(species = "summer flounder", data = directed_trips)
 
 ```{r}
 #| label: directed trips
-knitr::include_graphics(here::here("images", "summer flounder directed trips.png"))
+knitr::include_graphics("images/summer flounder directed trips.png")
 ```
 ------------------------------------------------------------------------------------
