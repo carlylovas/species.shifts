@@ -1,12 +1,18 @@
 url: https://carlylovas.github.io/species.shifts/
 template:
   bootstrap: 5
+navbar:
+  structure:
+    left: [intro, articles, reference, news]
+  components:
+    articles:
+      text: Articles
+      menu:
+        - text: Data Cleaning Functions
+          href: articles/data_cleaning_functions.html
+        - text: Plotting Functions
+          href: articles/plotting_functions.html
 articles:
   - title: "Articles"
     contents:
-      - data_cleaning_functions   # listed for nav, but excluded from build below
       - plotting_functions
-
-vignettes:
-  exclude:
-    - data_cleaning_functions.Rmd
