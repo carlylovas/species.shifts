@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# species.shifts <img src="man/figures/package_hex.svg" align="left" height = 150/>
+# species.shifts <img src="man/figures/package_hex.svg" height = 150, width = 150, align="left" />
 
 <!-- badges: start -->
 
