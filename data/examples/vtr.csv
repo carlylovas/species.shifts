@@ -1,0 +1,4 @@
+﻿year,trip_type,lat,lon,species_name,port_name,state_abb,state_full,kept,discarded
+1996,COMMERCIAL,41.67694,-69.59028,"FLOUNDER, WINTER / BLACKBACK",CHATHAM,MA,Massachusetts,350,0
+1996,COMMERCIAL,42.54417,-70.5375,COD,GLOUCESTER,MA,Massachusetts,850,0
+1996,COMMERCIAL,41.37472,-71.57028,"FLOUNDER, WINTER / BLACKBACK",POINT JUDITH,RI,Rhode Island,72,0

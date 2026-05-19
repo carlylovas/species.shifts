@@ -12,7 +12,3 @@ navbar:
           href: articles/data_cleaning_functions.html
         - text: Plotting Functions
           href: articles/plotting_functions.html
-articles:
-  - title: "Articles"
-    contents:
-      - plotting_functions

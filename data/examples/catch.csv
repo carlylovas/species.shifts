@@ -1,0 +1,4 @@
+﻿estimate_status,year,coast,region,state,common_name,sci_name,harvest_a_b1_numbers,pse_harvest_a_b1_numbers,harvest_a_b1_weight_lb,pse_harvest_a_b1_weight,released_alive_b2_numbers,released_alive_b2_lower_95_percent_confidence_limit,released_alive_b2_upper_95_percent_confidence_limit,total_catch_a_b1_b2_numbers,total_catch_a_b1_b2_lower_95_percent_confidence_limit,total_catch_a_b1_b2_upper_95_percent_confidence_limit,total_catch_pse,comname
+Final,2024,Atlantic Coast,Mid Atlantic,Delaware,"rudderfish, banded",Seriola zonata,0,0,0,0,23,0,56,23,0,56,73.9,banded rudderfish
+Final,2024,Atlantic Coast,Mid Atlantic,Delaware,"shark, dogfish, spiny",Squalus acanthias,0,0,0,0,35430,6611,64249,35430,6611,64249,41.5,spiny dogfish
+Final,2024,Atlantic Coast,Mid Atlantic,Delaware,"bass, black sea",Centropristis striata,105763,28.8,130995,28.1,1008441,290955,1725926,1114203,395720,1832686,32.9,black sea bass

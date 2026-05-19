@@ -1,0 +1,4 @@
+﻿id,svspp,comname,year,est_month,est_day,season,lat,lon,est_towdate,total_biomass_kg
+1.97003E+12,23,winter skate,1970,3,0,Spring,41.58333,-69.46667,3/12/70 8:00,3.128
+1.97003E+12,28,thorny skate,1970,3,0,Spring,41.58333,-69.46667,3/12/70 8:45,0.9
+1.97003E+12,73,atlantic cod,1970,3,0,Spring,41.58333,-69.46667,3/12/70 8:45,8.91
