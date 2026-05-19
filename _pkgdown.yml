@@ -8,7 +8,8 @@ navbar:
     articles:
       text: Articles
       menu:
-        - text: Data Cleaning Functions
+        - text: Accessing and cleaning federal fisheries data
           href: articles/data_cleaning_functions.html
-        - text: Plotting Functions
+        - text: Plotting federal fisheries data
           href: articles/plotting_functions.html
+    reference:
