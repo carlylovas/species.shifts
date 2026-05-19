@@ -1,15 +1,15 @@
 url: https://carlylovas.github.io/species.shifts/
 template:
   bootstrap: 5
-navbar:
-  structure:
-    left: [intro, articles, reference, news]
-  components:
-    articles:
-      text: Articles
-      menu:
-        - text: Accessing and cleaning federal fisheries data
-          href: articles/data_cleaning_functions.html
-        - text: Plotting federal fisheries data
-          href: articles/plotting_functions.html
+# navbar:
+#   structure:
+#     left: [intro, articles, reference, news]
+#   components:
+#     articles:
+#       text: Articles
+#       menu:
+#         - text: Accessing and cleaning federal fisheries data
+#           href: articles/data_cleaning_functions.html
+#         - text: Plotting federal fisheries data
+#           href: articles/plotting_functions.html
 

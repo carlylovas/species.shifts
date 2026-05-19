@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# species.shifts <img src="images/package_hex.svg" align="left" height="138" /></a>
+# species.shifts <img src="man/figures/package_hex.svg" align="left" height = 150/>
 
 <!-- badges: start -->
 
@@ -49,7 +49,8 @@ independent data sets.
 
 <p align="center">
 
-<img src="images/package_data_flow.svg">
+<img src="man/figures/package_data_flow.svg" align="center"/>
+
 </p>
 
 ------------------------------------------------------------------------
@@ -85,7 +86,7 @@ devtools::install_github("https://github.com/carlylovas/species.shifts")
 ## Vignettes
 
 [Accessing and cleaning federal fisheries
-data](https://carlylovas.github.io/species.shifts/vignettes/data_cleaning_functions.html)
+data](https://carlylovas.github.io/species.shifts/articles/data_cleaning_functions.html)
 
 [Plotting federal fisheries
-data](https://carlylovas.github.io/species.shifts/vignettes/plotting_functions.html)
+data](https://carlylovas.github.io/species.shifts/articles/plotting_functions.html)

@@ -1,5 +1,5 @@
 ---
-output: rmarkdown::html_vignette
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -9,11 +9,11 @@ output: rmarkdown::html_vignette
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "docs/images/"
+  fig.path = "man/figures/"
 )
 ```
 
-# species.shifts <img src="images/package_hex.svg" align="left" height="138" /></a>
+# species.shifts <img src="man/figures/package_hex.svg" align="left" height = 150/>
 
 <!-- badges: start -->
 
@@ -35,11 +35,11 @@ All functions that begin with `map_()` or `plot_()` will filter to the species o
 
 All three groups of functions will ultimately yield the materials needed to generate a **summary report**, describing the patterns of distribution as described across the federal fishery dependent and independent data sets.
 
-
 <p align="center">
-  <img src="images/package_data_flow.svg">
-</p>
 
+<img src="man/figures/package_data_flow.svg" align="center"/>
+
+</p>
 
 ------------------------------------------------------------------------
 
@@ -66,6 +66,7 @@ devtools::install_github("https://github.com/carlylovas/species.shifts")
 ```
 
 ## Vignettes
+
 [Accessing and cleaning federal fisheries data](https://carlylovas.github.io/species.shifts/articles/data_cleaning_functions.html)
 
 [Plotting federal fisheries data](https://carlylovas.github.io/species.shifts/articles/plotting_functions.html)
