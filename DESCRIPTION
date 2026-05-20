@@ -5,7 +5,10 @@ Version: 0.1.0
 Authors@R: c(
     person("Carly", "Lovas", , "carly.lovas@gmail.com", role = c("aut", "cre"),
                     comment = c(ORCID = "0009-0002-8121-7684")),
-    person("Adam", "Kemberling", role = "ctb"),
+    person("Adam", "Kemberling", role = "ctb",
+                    comment = c(ORCID = "0000-0003-0402-0829")),
+    person("Andrew", "Allyn", role = "ctb",
+                    comment = c(ORCID = "0000-0002-1584-0198"))
     person("Gulf of Maine Research Institute", role = "fnd")
     )
 Author: Carly Lovas [aut, cre]
