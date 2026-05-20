@@ -69,3 +69,6 @@ devtools::install_github("https://github.com/carlylovas/species.shifts")
 [Accessing and cleaning federal fisheries data](https://carlylovas.github.io/species.shifts/articles/data_cleaning_functions.html)
 
 [Plotting federal fisheries data](https://carlylovas.github.io/species.shifts/articles/plotting_functions.html)
+
+------------------------------------------------------------------------
+
