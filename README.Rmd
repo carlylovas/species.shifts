@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## species.shifts <a href="https://carlylovas.github.io/species.shifts/"><img src="man/figures/logo.svg" alt="species.shifts website" align="left" height="150"/></a>
+## species.shifts <img src="man/figures/logo.svg" align="left" height = 150/>
 
 <!-- badges: start -->
 

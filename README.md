@@ -1,7 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## species.shifts 
+## species.shifts <img src="man/figures/logo.svg" align="left" height = 150/>
+
 <!-- badges: start -->
 
 <!-- badges: end -->
