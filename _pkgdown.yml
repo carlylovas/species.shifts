@@ -4,15 +4,24 @@ template:
   bslib:
     bootswatch: cosmo
     pkgdown-nav-height: 100px
-# navbar:
-#   structure:
-#     left: [intro, articles, reference, news]
-#   components:
-#     articles:
-#       text: Articles
-#       menu:
-#         - text: Accessing and cleaning federal fisheries data
-#           href: articles/data_cleaning_functions.html
-#         - text: Plotting federal fisheries data
-#           href: articles/plotting_functions.html
+navbar:
+  structure:
+    left: [intro, articles, summaries, reference, news]
+  components:
+    articles:
+      text: About
+      menu:
+        - text: Accessing and cleaning federal fisheries data
+          href: articles/data_cleaning_functions.html
+        - text: Indicators of species distribution change
+          href: articles/indicators.html
+        - text: Visualizing federal fisheries data
+          href: articles/plotting_functions.html
+    summaries:
+      text: Synthesis
+      menu:
+        - text: Summer flounder
+          href: articles/summary_demo.html
+
+
 
