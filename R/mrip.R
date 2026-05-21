@@ -75,7 +75,7 @@ pull_mrip_catch <- function(proj_path){
 #' @description Function to calculate trends and summarise into an aesthetic table.
 #'
 #' @param species Mid-Atlantic managed species as listed in `species_list(source = "permits")`
-#' @param data Landings outputs from `pull_mrip_catch()`
+#' @param data Catch estimates from `pull_mrip_catch()`
 #' @return gtable of recreational harvest trends
 #' @import
 #' @export

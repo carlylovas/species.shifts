@@ -4,7 +4,7 @@
 \alias{map_vtr}
 \title{Plot vessel trip report data}
 \usage{
-map_vtr(species = "all", data = "vtr")
+map_vtr(species = "all", data = NULL)
 }
 \arguments{
 \item{species}{Default is "all", includes Mid-Atlantic species represented in `species.shifts::species_list()`}
@@ -18,6 +18,6 @@ Map of distribution of observed kept catch along the Northeast US. Selecting `al
 Function to plot distributions of kept catch using vessel trip report (VTR) data. Color indicates `leading` and `trailing` 10% of kept catch, with `center`representing 80% of kept catch. Yellow contours represent density. Distributions are cropped to management zones.
 }
 \examples{
-# map_vtr(species = "summer flounder", data = "vtr")
+# map_vtr(species = "summer flounder", data = vtr)
 
 }

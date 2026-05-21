@@ -4,7 +4,7 @@
 \alias{map_nefsc}
 \title{Map NEFSC biomass data}
 \usage{
-map_nefsc(species = "all", data = "nefsc")
+map_nefsc(species = "all", data = NULL)
 }
 \arguments{
 \item{species}{Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`}
@@ -18,6 +18,6 @@ Map of distribution of biomass along the Northeast US. Selecting `all` species w
 Function to maps distributions of biomass in NEFSC Spring-Fall Bottom Trawl Survey. Color indicates `leading` and `trailing` 10% of kept catch, with `center`representing 80% of surveyed biomass. Yellow contours represent density.
 }
 \examples{
-# map_nefsc(species = "summer flounder", data = "nefsc")
+# map_nefsc(species = "summer flounder", data = nefsc)
 
 }

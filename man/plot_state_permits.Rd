@@ -4,7 +4,7 @@
 \alias{plot_state_permits}
 \title{Plotting permit proportions by state}
 \usage{
-plot_state_permits(species = "all", data = "permits")
+plot_state_permits(species = "all", data = NULL)
 }
 \arguments{
 \item{species}{Mid-Atlantic managed species as listed in `species_list(source = "permits")`}

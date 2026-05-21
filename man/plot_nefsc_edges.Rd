@@ -4,7 +4,7 @@
 \alias{plot_nefsc_edges}
 \title{Plot edges of distribution}
 \usage{
-plot_nefsc_edges(species = "all", data = "nefsc")
+plot_nefsc_edges(species = "all", data = NULL)
 }
 \arguments{
 \item{species}{Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`}

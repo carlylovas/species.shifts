@@ -28,7 +28,9 @@ vignette: >
 
 The ultimate goal of this package is to quantify species distribution change across a variety of data sources through the development of indicators and data visualizations. These outputs can then be synthesized into a summary report to describe these changes and suggest whether or not management re-evaluation should be considered in the immediate future. These reports are designed to be produced with the data cleaning, indicator development, and visualization functions of `species.shifts`. Assuming that the federal data that informs these functions are updated regulary, the Council should be able to reproduce these reports on a yearly basis.
 
-Currently, this vignette serves as a *template* for what content could be featured within such synthesis reports.
+Currently, this vignette serves as a **template** for what content could be featured within such synthesis reports.
+
+------------------------------------------------------------------------
 
 ```{r}
 #| label: setup
@@ -42,9 +44,11 @@ library(species.shifts)
 
 ```
 
-<img src="https://www.fisheries.noaa.gov/s3//2022-09/640x427-Flounder-Summer-NOAAFisheries.png?itok=wtEaG1bU" style="float:left; width:150px;" url = "https://www.fisheries.noaa.gov"/>
+<img src="https://www.fisheries.noaa.gov/s3//2022-09/640x427-Flounder-Summer-NOAAFisheries.png?itok=wtEaG1bU" style="float:left; width:150px;"/>
 
-# Summer Flounder - *Paralichthys dentatus*
+# Summer flounder - *Paralichthys dentatus*
+
+Summer flounder, *Paralichthys dentatus*, is a demersal flatfish common along the Northeast US shelf. The commercial fishery is managed by the Mid-Atlantic Fisheries Management Council in conjunction with the Atlantic States Marine Fisheries Commission. This **draft** synthesis describes the distribution of both biomass and fishing activity across six federal data sets. By exploring different indicators of biomass across this suite of information, we hope to be able to ilicit a holistic image of how the biomass is spread along the coast and if commercial and recreational fishing activity is able to match any movement. Ideally, this holistic view will empower the management councils to make any necessary amendments to their fishery management plans.
 
 ## NEFSC Bottom Trawl
 

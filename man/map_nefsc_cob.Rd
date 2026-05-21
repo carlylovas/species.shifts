@@ -4,7 +4,7 @@
 \alias{map_nefsc_cob}
 \title{Map NEFSC Bottom Trawl Center of Biomass}
 \usage{
-map_nefsc_cob(species = "all", data = "nefsc")
+map_nefsc_cob(species = "all", data = NULL)
 }
 \arguments{
 \item{species}{Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`}

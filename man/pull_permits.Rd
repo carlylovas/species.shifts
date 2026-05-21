@@ -7,13 +7,13 @@
 pull_permits(proj_path)
 }
 \arguments{
-\item{proj_path}{Local path to data file}
+\item{proj_path}{Local path to data folder. Note that this code is designed to read in multiple Excel files from a single folder, as each year is its own Excel file. If other Excel files are included in the same location, this function will not be able to discern it from the permits data and will not run.}
 }
 \value{
 Data frame of permits; includes year, prinicpal port and state, permit type, target species, and category (commerical, for-hire).
 }
 \description{
-Function to pull, clean and geocode GARFO commercial fishing permits from pre-existing confidential repository. Note that due to spelling error, geocoding principal ports removes 1% of permit entries, and takes approximately 25 minutes to run.
+Function to pull, clean and geocode GARFO commercial fishing permits from pre-existing confidential repository. Note that due to spelling error, geocoding principal ports removes `1%` of permit entries, and takes approximately 25 minutes to run.
 }
 \examples{
 # permits <- pull_permits(proj_path = proj_path)

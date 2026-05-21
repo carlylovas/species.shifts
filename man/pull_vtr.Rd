@@ -7,7 +7,7 @@
 pull_vtr(proj_path)
 }
 \arguments{
-\item{proj_path}{Local path to data file}
+\item{proj_path}{Local path to data folder. Note that VTR data was provided in multiple CSV files. This function is designed to read all CSV files within a central location. If other CSVs are stored in the same location as the VTR, this function will not be able to discern the different data and will not run.}
 }
 \value{
 Data frame of vessel trip reports; includes year, sub_trip_id, latitude, longitude, port name and state, species caught, weight of kept and discarded catch.
