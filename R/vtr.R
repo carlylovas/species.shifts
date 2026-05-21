@@ -6,7 +6,7 @@
 #'
 #' @description Function to pull and clean Vessel Trip Reports from pre-existing confidential repository.
 #'
-#' @param proj_path Local path to data file
+#' @param proj_path Local path to data folder. Note that VTR data was provided in multiple CSV files. This function is designed to read all CSV files within a central location. If other CSVs are stored in the same location as the VTR, this function will not be able to discern the different data and will not run.
 #' @return Data frame of vessel trip reports; includes year, sub_trip_id, latitude, longitude, port name and state, species caught, weight of kept and discarded catch.
 #' @export
 #' @examples # not run
@@ -58,15 +58,15 @@ pull_vtr <- function(proj_path){
 #' @param data Default is "vtr." `pull_vtr` must be run and named "vtr" in order to run this function.
 #' @return Map of distribution of observed kept catch along the Northeast US. Selecting `all` species will return a list.
 #' @export
-#' @examples # map_vtr(species = "summer flounder", data = "vtr")
+#' @examples # map_vtr(species = "summer flounder", data = vtr)
 #'
-map_vtr <- function(species = "all", data = "vtr"){
+map_vtr <- function(species = "all", data = NULL){
 
   # Get species list
   species_list <- species.shifts::species_list(source = "vtr")
 
   # Base filter
-  data <- vtr |>
+  data <- data |>
     dplyr::mutate(comname = tolower(species_name),
                   decade  = 10*year%/%10) |>
     dplyr::right_join(species_list)

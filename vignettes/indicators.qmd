@@ -1,0 +1,27 @@
+---
+title: "Indicators of species distribution change"
+author: "Carly Lovas, Andrew Allyn"
+format:
+  html:
+    title-block-banner: "#236192"
+    grid: 
+      body-width: 1500px
+      sidebar-width: 450px
+      margin-width: 450px
+    toc: true
+    self-contained: true
+execute: 
+  echo: false
+  warning: false
+  message: false
+  error: true
+  comment: ""
+  fig-align: center
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{plotting_functions}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+## *In development*

@@ -42,7 +42,7 @@ pull_mrip_catch <- function(proj_path){
   )
 
   region_levels <- c(
-    "North Atlantic",
+    "New England",
     "Mid Atlantic",
     "South Atlantic",
     "Gulf of Mexico"
@@ -56,6 +56,7 @@ pull_mrip_catch <- function(proj_path){
     dplyr::mutate(common_name = tolower(common_name),
            state  = stringr::str_to_title(state),
            state  = factor(state, levels = states_ns),
+           region = str_replace(region, "North Atlantic", "New England"),
            region = factor(region, levels = region_levels))
 
   data <- data |>

@@ -103,10 +103,10 @@ pull_nefsc <- function(proj_path){
 #' @export
 #' @examples # map_nefsc_cob(species = "black sea bass", data = nefsc)
 
-map_nefsc_cob <- function(species = "all", data = "nefsc"){
+map_nefsc_cob <- function(species = "all", data = NULL){
 
   # Get species list
-  species_list <- species.shift::species_list(source = "nefsc")
+  species_list <- species.shifts::species_list(source = "nefsc")
 
   # Base filter
   data <- data |>
@@ -195,6 +195,8 @@ map_nefsc_cob <- function(species = "all", data = "nefsc"){
   }
 }
 
+# ggsave(filename = here::here("summer flounder cob map.png"), map_nefsc_cob(species = "summer flounder", data = nefsc), width = 13)
+
 ## Seasonal percentile plots
 #' @title Plot edges of distribution
 #'
@@ -206,10 +208,10 @@ map_nefsc_cob <- function(species = "all", data = "nefsc"){
 #' @export
 #' @examples # plot_nefsc_edges(species = "summer flounder", data = nefsc)
 
-plot_nefsc_edges <- function(species = "all", data = "nefsc"){
+plot_nefsc_edges <- function(species = "all", data = NULL){
 
   # Get species list
-  species_list <- species.shift::species_list(source = "nefsc")
+  species_list <- species.shifts::species_list(source = "nefsc")
 
   # Base filter
   data <- data |>
@@ -280,6 +282,7 @@ plot_nefsc_edges <- function(species = "all", data = "nefsc"){
   }
 }
 
+
 ## Distance between centroids
 #' @title Plot NEFSC Bottom Trawl Center of Biomass
 #'
@@ -291,10 +294,10 @@ plot_nefsc_edges <- function(species = "all", data = "nefsc"){
 #' @export
 #' @examples # plot_nefsc_centers(species = "black sea bass", data = nefsc)
 
-plot_nefsc_centers <- function(species = "all", data = "nefsc"){
+plot_nefsc_centers <- function(species = "all", data = NULL){
 
   # Get species list
-  species_list <- species.shift::species_list(source = "nefsc")
+  species_list <- species.shifts::species_list(source = "nefsc")
 
   # Base filter
   data <- data |>
@@ -368,12 +371,12 @@ plot_nefsc_centers <- function(species = "all", data = "nefsc"){
 #' @param data Default is "nefsc" `nefsc` must be run and named "observer" in order to run this function.
 #' @return Map of distribution of biomass along the Northeast US. Selecting `all` species will return a list.
 #' @export
-#' @examples # map_nefsc(species = "summer flounder", data = "nefsc")
+#' @examples # map_nefsc(species = "summer flounder", data = nefsc)
 #'
-map_nefsc <- function(species = "all", data = "nefsc"){
+map_nefsc <- function(species = "all", data = NULL){
 
   # Get species list
-  species_list <- species.shift::species_list(source = "nefsc")
+  species_list <- species.shifts::species_list(source = "nefsc")
 
   # Base filter
   data <- data |>
@@ -474,3 +477,4 @@ map_nefsc <- function(species = "all", data = "nefsc"){
     return(plots$out[[1]])
   }
 }
+

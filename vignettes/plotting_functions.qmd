@@ -154,14 +154,45 @@ knitr::include_graphics(here::here("images/summer flounder permit map.png"))
 ```
 
 ## NEFSC Bottom Trawl
-*In development*
-Given the wide breadth of fishery-indepented information provided by the federal bottom trawl survey, this data set has multiple plotting and mapping functions associated with it. 
+Given the wide breadth of fishery-independent information provided by the federal bottom trawl survey, this data set has multiple plotting and mapping functions associated with it. 
+
+The first mapping function `map_nefsc_cob()` maps the seasonal centers of biomass 
 ``` r
-map_nefsc_cob()
-map_nefsc()
-plot_nefsc_centers()
-plot_nefsc_edges()
+nefsc <- pull_nefsc(proj_path = my_path)
+map_nefsc_cob(species = "summer flounder", data = nefsc)
 ```
+```{r}
+#| label: trawl map
+knitr::include_graphics(here::here("images/summer flounder cob map.png"))
+```
+```r
+map_nefsc(species = "summer flounder", data = nefsc)
+```
+```{r}
+#| label: trawl lat mao
+knitr::include_graphics(here::here("images/summer flounder lat dist.png"))
+```
+```r
+plot_nefsc_centers(species = "summer flounder", data = nefsc)
+```
+```{r}
+#| label: trawl centers
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
+knitr::include_graphics(here::here("images/summer flounder centers.png"))
+```
+```r
+plot_nefsc_edges(species = "summer flounder", data = nefsc)
+```
+```{r}
+#| label: trawl edges
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
+knitr::include_graphics(here::here("images/summer flounder edges.png"))
+```
+
 
 ## Marine Recreational Information Program
 ### Catch estimates
@@ -182,7 +213,6 @@ Similar to catch estimates, directed trips gives a rough estimate of the recreat
 directed_trips <- get_mrip_directed_trips()
 plot_directed_trips(species = "summer flounder", data = directed_trips)
 ```
-
 ```{r}
 #| label: directed trips
 knitr::include_graphics(here::here("images/summer flounder directed trips.png"))
