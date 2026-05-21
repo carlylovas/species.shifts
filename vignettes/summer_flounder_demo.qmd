@@ -54,7 +54,7 @@ Summer flounder, *Paralichthys dentatus*, is a demersal flatfish common along th
 
 ```{r}
 #| label: trawl map
-knitr::include_graphics(here::here("images/summer flounder cob map.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder case study.png"))
 ```
 
 ```{r}
@@ -64,27 +64,27 @@ knitr::include_graphics(here::here("images/summer flounder cob map.png"))
 #| out-height: 400px
 #| layout-ncol: 2
 
-knitr::include_graphics(here::here("images/summer flounder centers.png"))
-knitr::include_graphics(here::here("images/summer flounder edges.png"))
+# knitr::include_graphics(here::here("images/summer flounder/summer flounder centers.png"))
+# knitr::include_graphics(here::here("images/summer flounder/summer flounder edges.png"))
 ```
 
 ```{r}
 #| label: trawl lat map
-knitr::include_graphics(here::here("images/summer flounder lat dist.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder latitude map.png"))
 ```
 
 ## Vessel Trip Reports
 
 ```{r}
 #| label: vtr
-knitr::include_graphics(here::here("images/summer flounder vtr.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder vtr.png"))
 ```
 
 ## Fisheries Observer
 
 ```{r}
 #| label: obs
-knitr::include_graphics(here::here("images/summer flounder observer map.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder observer map.png"))
 ```
 
 ## GARFO Dealer Data
@@ -95,7 +95,7 @@ knitr::include_graphics(here::here("images/summer flounder observer map.png"))
 #| out-width: 700px
 #| out-height: 400px
 
-knitr::include_graphics(here::here("images/summer flounder landings.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder landings.png"))
 ```
 
 ```{r}
@@ -103,7 +103,7 @@ knitr::include_graphics(here::here("images/summer flounder landings.png"))
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images/summer flounder state landings.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder state landings.png"))
 ```
 
 ```{r}
@@ -111,7 +111,7 @@ knitr::include_graphics(here::here("images/summer flounder state landings.png"))
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images/summer flounder council landings.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder council landings.png"))
 ```
 
 ## GARFO Federal Permits
@@ -121,7 +121,7 @@ knitr::include_graphics(here::here("images/summer flounder council landings.png"
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images/summer flounder permits.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder permits.png"))
 ```
 
 ```{r}
@@ -129,7 +129,7 @@ knitr::include_graphics(here::here("images/summer flounder permits.png"))
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images/summer flounder permits by council.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder permits by council.png"))
 ```
 
 ```{r}
@@ -137,12 +137,12 @@ knitr::include_graphics(here::here("images/summer flounder permits by council.pn
 #| fig-align: center
 #| out-width: 700px
 #| out-height: 400px
-knitr::include_graphics(here::here("images/summer flounder permit percentiles.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder permit percentiles.png"))
 ```
 
 ```{r}
 #| label: permit maps
-knitr::include_graphics(here::here("images/summer flounder permit map.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder permit map.png"))
 ```
 
 ## Marine Recreational Information Program
@@ -151,14 +151,14 @@ knitr::include_graphics(here::here("images/summer flounder permit map.png"))
 
 ```{r}
 #| label: catch estimate
-knitr::include_graphics(here::here("images/summer flounder catch.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder catch.png"))
 ```
 
 ### Directed trips
 
 ```{r}
 #| label: directed trips
-knitr::include_graphics(here::here("images/summer flounder directed trips.png"))
+knitr::include_graphics(here::here("images/summer flounder/summer flounder directed trips.png"))
 ```
 
 ------------------------------------------------------------------------

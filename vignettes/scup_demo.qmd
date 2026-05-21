@@ -1,0 +1,166 @@
+---
+title: "Synthesizing species distribution indicators"
+author: "Carly Lovas"
+format:
+  html:
+    title-block-banner: "#236192"
+    grid: 
+      body-width: 1500px
+      sidebar-width: 450px
+      margin-width: 450px
+    toc: true
+    self-contained: true
+execute: 
+  echo: false
+  warning: false
+  message: false
+  error: true
+  comment: ""
+  fig-align: center
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{plotting_functions}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+**In development**
+
+The ultimate goal of this package is to quantify species distribution change across a variety of data sources through the development of indicators and data visualizations. These outputs can then be synthesized into a summary report to describe these changes and suggest whether or not management re-evaluation should be considered in the immediate future. These reports are designed to be produced with the data cleaning, indicator development, and visualization functions of `species.shifts`. Assuming that the federal data that informs these functions are updated regulary, the Council should be able to reproduce these reports on a yearly basis.
+
+Currently, this vignette serves as a **template** for what content could be featured within such synthesis reports.
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+#| echo: false
+
+library(tidyverse)
+library(here)
+library(species.shifts)
+
+```
+
+<img src="https://www.fisheries.noaa.gov/s3//styles/original/s3/2022-09/640x427-Scup-NOAAFisheries_0.png?itok=TFoWqRrr" style="float:left; width:150px;"/>
+
+# Scup - *Stenotomus chrysops*
+
+Scup, *Stenotomus chrysops*, also know as *porgy*, is a demersal fish common along the Northeast US shelf. The commercial fishery is managed by the Mid-Atlantic Fisheries Management Council in conjunction with the Atlantic States Marine Fisheries Commission. This **draft** synthesis describes the distribution of both biomass and fishing activity across six federal data sets. By exploring different indicators of biomass across this suite of information, we hope to be able to ilicit a holistic image of how the biomass is spread along the coast and if commercial and recreational fishing activity is able to match any movement. Ideally, this holistic view will empower the management councils to make any necessary amendments to their fishery management plans.
+
+## NEFSC Bottom Trawl
+
+```{r}
+#| label: trawl map
+knitr::include_graphics(here::here("images/scup/scup case study.png"))
+```
+
+```{r}
+#| label: trawl centers
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
+#| layout-ncol: 2
+
+# knitr::include_graphics(here::here("images/scup/scup centers.png"))
+# knitr::include_graphics(here::here("images/scup/scup edges.png"))
+```
+
+```{r}
+#| label: trawl lat map
+knitr::include_graphics(here::here("images/scup/scup latitude map.png"))
+```
+
+## Vessel Trip Reports
+
+```{r}
+#| label: vtr
+knitr::include_graphics(here::here("images/scup/scup vtr.png"))
+```
+
+## Fisheries Observer
+
+```{r}
+#| label: obs
+knitr::include_graphics(here::here("images/scup/scup observer map.png"))
+```
+
+## GARFO Dealer Data
+
+```{r}
+#| label: landings trends
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
+
+knitr::include_graphics(here::here("images/scup/scup landings.png"))
+```
+
+```{r}
+#| label: landings by state
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
+knitr::include_graphics(here::here("images/scup/scup state landings.png"))
+```
+
+```{r}
+#| label: landings by council
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
+knitr::include_graphics(here::here("images/scup/scup council landings.png"))
+```
+
+## GARFO Federal Permits
+
+```{r}
+#| label: permits by state
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
+knitr::include_graphics(here::here("images/scup/scup permits.png"))
+```
+
+```{r}
+#| label: permits by council
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
+knitr::include_graphics(here::here("images/scup/scup permits by council.png"))
+```
+
+```{r}
+#| label: permits edges
+#| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
+knitr::include_graphics(here::here("images/scup/scup permit percentiles.png"))
+```
+
+```{r}
+#| label: permit maps
+knitr::include_graphics(here::here("images/scup/scup permit map.png"))
+```
+
+## Marine Recreational Information Program
+
+### Catch estimates
+
+```{r}
+#| label: catch estimate
+knitr::include_graphics(here::here("images/scup/scup catch.png"))
+```
+
+### Directed trips
+
+```{r}
+#| label: directed trips
+knitr::include_graphics(here::here("images/scup/scup directed trips.png"))
+```
+
+------------------------------------------------------------------------
+
+

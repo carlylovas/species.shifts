@@ -21,7 +21,9 @@ navbar:
       text: Synthesis
       menu:
         - text: Summer flounder
-          href: articles/summary_demo.html
+          href: articles/summer_flounder_demo.html
+        - text: Scup
+          href: articles/scup_demo.html
 
 
 
