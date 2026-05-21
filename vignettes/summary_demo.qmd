@@ -24,7 +24,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-*In development*
+**In development**
 
 The ultimate goal of this package is to quantify species distribution change across a variety of data sources through the development of indicators and data visualizations. These outputs can then be synthesized into a summary report to describe these changes and suggest whether or not management re-evaluation should be considered in the immediate future. These reports are designed to be produced with the data cleaning, indicator development, and visualization functions of `species.shifts`. Assuming that the federal data that informs these functions are updated regulary, the Council should be able to reproduce these reports on a yearly basis.
 
@@ -42,7 +42,10 @@ library(species.shifts)
 
 ```
 
-# Summer Flounder, *Paralichthys dentatus*
+<img src="https://www.fisheries.noaa.gov/s3//2022-09/640x427-Flounder-Summer-NOAAFisheries.png?itok=wtEaG1bU" style="float:left; width:150px;" url = "https://www.fisheries.noaa.gov"/>
+
+# Summer Flounder - *Paralichthys dentatus*
+
 ## NEFSC Bottom Trawl
 
 ```{r}
