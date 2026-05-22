@@ -288,7 +288,6 @@ plot_state_permits <- function(species = "all", data = NULL) {
           ggplot2::theme(
             text              = ggplot2::element_text(family = "Avenir", size = 13),
             legend.title      = ggplot2::element_blank(),
-            axis.title        = ggplot2::element_blank(),
             legend.position   = "bottom",
             strip.background  = ggplot2::element_blank(),
             strip.text        = ggplot2::element_text(hjust = 0, face = "plain", size = 15),
@@ -381,7 +380,6 @@ plot_council_permits <- function(species = "all", data = "permits") {
           ggplot2::theme(
             text              = ggplot2::element_text(family = "Avenir", size = 13),
             legend.title      = ggplot2::element_blank(),
-            axis.title        = ggplot2::element_blank(),
             legend.position   = "bottom",
             strip.background  = ggplot2::element_blank(),
             strip.text        = ggplot2::element_text(hjust = 0, face = "plain", size = 15),
