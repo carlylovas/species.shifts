@@ -71,7 +71,7 @@ plot_landings_trends(species = "summer flounder", data = obs)
 ```{r}
 #| label: landings trends
 #| fig-align: center
-#| out-width: 400px
+#| out-width: 700px
 #| out-height: 400px
 
 knitr::include_graphics(here::here("images/summer flounder/summer flounder landings.png"))
@@ -85,6 +85,8 @@ plot_state_landings(species = "summer flounder", data = landings)
 ```{r}
 #| label: landings by state
 #| fig-align: center
+#| out-width: 700px
+#| out-height: 400px
 knitr::include_graphics(here::here("images/summer flounder/summer flounder state landings.png"))
 ```
 The council landings plotting function returns the *proportion of landings across management councils* for both landed value and volume.
