@@ -43,7 +43,7 @@ pull_mrip_catch <- function(proj_path){
 
   region_levels <- c(
     "New England",
-    "Mid Atlantic",
+    "Mid-Atlantic",
     "South Atlantic",
     "Gulf of Mexico"
   )
@@ -57,6 +57,7 @@ pull_mrip_catch <- function(proj_path){
            state  = stringr::str_to_title(state),
            state  = factor(state, levels = states_ns),
            region = str_replace(region, "North Atlantic", "New England"),
+           region = str_replace(region, "Mid Atlantic", "Mid-Atlantic"),
            region = factor(region, levels = region_levels))
 
   data <- data |>
@@ -74,7 +75,7 @@ pull_mrip_catch <- function(proj_path){
 #'
 #' @description Function to calculate trends and summarise into an aesthetic table.
 #'
-#' @param species Mid-Atlantic managed species as listed in `species_list(source = "permits")`
+#' @param species Mid-Atlantic managed species as listed in `species_list(source = "mrip")`
 #' @param data Catch estimates from `pull_mrip_catch()`
 #' @return gtable of recreational harvest trends
 #' @import
@@ -82,7 +83,11 @@ pull_mrip_catch <- function(proj_path){
 #' @example # plot_catch_trends(species = "summer flounder", data = catch)
 #'
 plot_catch_trends <- function(species = "all", data = "NULL") {
-  # States North to South
+
+  # Get species list
+  species_list <- species.shifts::species_list(source = "mrip")
+
+  # States, listed north to south
   states_ns <- c(
     "Maine",
     "New Hampshire",
@@ -106,16 +111,13 @@ plot_catch_trends <- function(species = "all", data = "NULL") {
 
   region_levels <- c(
     "New England",
-    "Mid Atlantic",
+    "Mid-Atlantic",
     "South Atlantic",
     "Gulf of Mexico"
   )
 
-  # Get species list
-  species_list <- species.shifts::species_list(source = "mrip")
-
   # Join to validated species list
-  catch_data <- data |>
+  data <- data |>
     dplyr::right_join(species_list)
 
   # Validate and filter early if specific species requested
@@ -141,7 +143,7 @@ plot_catch_trends <- function(species = "all", data = "NULL") {
         state %in% c("Maine", "New Hampshire", "Massachusetts",
                      "Rhode Island", "Connecticut")           ~ "New England",
         state %in% c("New York", "New Jersey", "Delaware",
-                     "Maryland", "Virginia")                  ~ "Mid Atlantic",
+                     "Maryland", "Virginia")                  ~ "Mid-Atlantic",
         state %in% c("North Carolina", "South Carolina",
                      "Georgia", "Florida")                    ~ "South Atlantic",
         state %in% c("Alabama", "Mississippi",
@@ -249,7 +251,7 @@ plot_catch_trends <- function(species = "all", data = "NULL") {
     dplyr::arrange(region, state) |>
     gt::gt(groupname_col = "region") |>
     gt::tab_header(title = stringr::str_to_sentence(species),
-                   subtitle =  "MRIP Directed Trip Trends of the Last 15 Years") |>
+                   subtitle =  "MRIP Directed Trip Trends of the Last 15 Years; PSE <= 30%") |>
     gt::tab_options(row_group.as_column = T)  |>
     # Add a Sparkline for catch
     gtExtras::gt_plt_sparkline(

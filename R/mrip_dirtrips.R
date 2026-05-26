@@ -559,3 +559,231 @@ MRIP.dirtrips <- function(intdir = NULL, common = NULL, st = NULL, styr = NULL,
   )
 }
 
+###### Plot trends
+#' @title MRIP Directed trip estimates
+#'
+#' @description Function to calculate trends and summarise into an aesthetic table.
+#'
+#' @param species Mid-Atlantic managed species as listed in `species_list(source = "mrip")`
+#' @param data Catch estimates from `pull_mrip_catch()`
+#' @return gtable of recreational directed trip trends
+#' @import
+#' @export
+#' @example # plot_trip_estimates(species = "summer flounder", data = mrip)
+#'
+plot_trip_estimates <- function(species = "all", data = "NULL"){
+
+  # Get species list
+  species_list <- species.shifts::species_list(source = "mrip")
+
+  # States north-south
+  state_ns <- c(
+    ME = "Maine",          NH = "New Hampshire", MA = "Massachusetts",
+    CT = "Connecticut",    RI = "Rhode Island",  NY = "New York",
+    NJ = "New Jersey",     PA = "Pennsylvania",  MD = "Maryland",
+    DE = "Delaware",       VA = "Virginia",      NC = "North Carolina",
+    SC = "South Carolina", GA = "Georgia",       FL = "Florida"
+  )
+
+  # Council regions
+  councils <- c(
+    "Maine" = "New England",         "New Hampshire" = "New England",
+    "Massachusetts" = "New England", "Connecticut" = "New England",
+    "Rhode Island" = "New England",  "New York" = "Mid-Atlantic",
+    "New Jersey" = "Mid-Atlantic",      "Pennsylvania" = "Mid-Atlantic",
+    "Maryland" = "Mid-Atlantic",        "Delaware" = "Mid-Atlantic",
+    "Virginia" = "Mid-Atlantic",        "North Carolina" = "South Atlantic",
+    "South Carolina" = "South Atlantic","Georgia" = "South Atlantic",
+    "Florida" = "South Atlantic"
+  )
+
+  # Base filter
+  data <- data |>
+    dplyr::rename("comname" = "species") |>
+    dplyr::right_join(species_list) |>
+    tidyr::drop_na()
+
+  # Data expanded
+  data_exp <- data |>
+    tidyr::expand(year, state, area) |>
+    dplyr::mutate(state_full = dplyr::recode(state, !!!state_ns),
+                  council    = factor(councils[state_full], levels = c("New England", "Mid-Atlantic", "South Atlantic"))
+    )
+
+  # Validate and filter early if specific species requested
+  if (species != "all") {
+    if (!species %in% data$comname) {
+      message("Species '", species, "' not found in landings data.")
+      return(NULL)
+    }
+    data <- data |> dplyr::filter(comname == species)
+  }
+
+  # Join to validated species list
+  data <- data |>
+    janitor::clean_names() |>
+    dplyr::filter(pse <= 30) |>
+    dplyr::group_by(year, comname, state, area) |>
+    dplyr::summarise(direct_trips = sum(trips, na.rm = T), .groups = "drop")
+
+  # Build trip data
+  trips <- data  |>
+    dplyr::group_by(comname) |>
+    tidyr::expand(year, state, area) |> # note: figure out a way to force sc/ga/fl in there
+    dplyr::left_join(data)|>
+    dplyr::mutate(
+      direct_trips = dplyr::if_else(
+        is.na(direct_trips), 0, direct_trips),
+      state_full = dplyr::recode(state, !!!state_ns),
+      council    = factor(councils[state_full], levels = c("New England", "Mid-Atlantic", "South Atlantic"))
+    )
+
+  # Compute council trends
+  council_trends <- trips |>
+    dplyr::group_by(year) |>
+    dplyr::summarise(total_trips = sum(direct_trips, na.rm = T), .groups="drop") |>
+    dplyr::left_join(
+      trips |>
+        dplyr::group_by(year, council) |>
+        dplyr::summarise(trips = sum(direct_trips, na.rm = T), .groups = "drop")
+    ) |>
+    dplyr::filter(!is.na(council)) |>
+    dplyr::mutate(
+      council_frac = round(trips/total_trips, 2)*100
+    ) |>
+    dplyr::group_by(council) |>
+    tidyr::nest() |>
+    dplyr::mutate(trends = purrr::map(data, function(x){
+      council_trend    <- trend::mk.test(x$trips)$p.value < 0.05
+      council_rate     <- coef(lm(trips ~ year, data = x))[[2]]
+      council_rate_msg <- dplyr::if_else(council_rate > 0, "Increasing", "Decreasing")
+      council_msg      <- dplyr::if_else(council_trend, council_rate_msg,"Stable")
+      council_msg      <- dplyr::if_else(is.na(council_msg), "Limited Data", council_msg)
+
+      return(
+        tibble::tibble(
+          "council_effort"   = list(x$trips),
+          "council_trend"    = council_msg,
+          "council_fraction" = list(x$council_frac)))})) |>
+
+    dplyr::select(!data) |>
+    tidyr::unnest(trends) # add limited data somehow...
+
+  # Trends by state and fishing area...?
+  area <- trips |>
+    dplyr::group_by(year) |>
+    dplyr::summarise(total_trips = sum(direct_trips, na.rm = T), .groups="drop") |>
+    dplyr::left_join(
+      data_exp |>
+        dplyr::left_join(trips) |>
+        dplyr::group_by(year, council, state, state_full, area) |>
+        dplyr::summarise(trips = sum(direct_trips, na.rm = T), .groups = "drop")
+    ) |>
+    dplyr::mutate(
+      area_frac = round(trips/total_trips, 2)*100,
+      area_frac = dplyr::if_else(is.na(area_frac), 0, area_frac)) |>
+    dplyr::group_by(state, area) |>
+    tidyr::nest() |>
+    dplyr::mutate(trends = purrr::map(data, function(x){
+      area_trend    <- trend::mk.test(x$trips)$p.value < 0.05
+      area_rate     <- coef(lm(trips ~ year, data = x))[[2]]
+      area_rate_msg <- dplyr::if_else(area_rate > 0, "Increasing", "Decreasing")
+      area_msg      <- dplyr::if_else(area_trend, area_rate_msg, "Stable")
+      area_msg      <- dplyr::if_else(is.na(area_msg), "Limited Data", area_msg)
+
+      return(
+        tibble::tibble(
+          "area_effort" = list(x$trips),
+          "area_trend" = area_msg,
+          "area_fraction" = list(x$area_frac)))
+    })) |>
+    dplyr::select(!data) |>
+    tidyr::unnest(trends) |>
+    dplyr::mutate(
+      state_full = dplyr::recode(state, !!!state_ns),
+      state_full = factor(state_full, levels = state_ns),
+      council    = factor(councils[state_full], levels = c("New England", "Mid-Atlantic", "South Atlantic"))
+    )
+
+  out <- area |>
+    dplyr::full_join(council_trends) |>
+    dplyr::ungroup() |>
+    dplyr::select(council, council_fraction, state_full, area, area_fraction) |>
+    tidyr::pivot_wider(names_from = "area", values_from = "area_fraction") |>
+    dplyr::arrange(council, state_full) |>
+    dplyr::group_by(council) |>
+    dplyr::mutate(duplicates = duplicated(council_fraction),
+                  council_fraction = dplyr::if_else(duplicates == "TRUE", NA, council_fraction)) |>
+    dplyr::relocate(council_fraction, .before = state_full) |>
+    gt::gt(groupname_col = "council") |>
+    gt::tab_header(
+      title = stringr::str_to_sentence(species),
+      subtitle =  "MRIP Directed Trip Estimates of the Last 15 Years; PSE <= 30%")  |>
+    gt::tab_options(row_group.as_column = T) |>
+    # Add a Sparkline for state proportion
+    gtExtras::gt_plt_sparkline(
+      column = council_fraction,
+      type = "shaded",
+      palette = c(
+        "black",
+        "black",
+        rep("transparent", 2),
+        gmRi::gmri_cols("warm yellow")),
+      same_limit = T) |>
+    # Add a Sparkline for catch
+    gtExtras::gt_plt_sparkline(
+      column = `Exclusive Economic Zone (Ocean>3 mi)`,
+      type = "shaded",
+      palette = c(
+        "black",
+        "black",
+        rep("transparent", 2),
+        gmRi::gmri_cols("gmri blue")),
+      same_limit = F) |>
+    # Sparkline for the fraction of annual catch
+    gtExtras::gt_plt_sparkline(
+      column = Inland,
+      type = "shaded",
+      palette = c(
+        "black",
+        "black",
+        rep("transparent", 2),
+        gmRi::gmri_cols("gmri blue")),
+      same_limit = F) |>
+    gtExtras::gt_plt_sparkline(
+      column = `State Territorial Seas (Ocean<=3 mi excluding Inland)`,
+      type = "shaded",
+      palette = c(
+        "black",
+        "black",
+        rep("transparent", 2),
+        gmRi::gmri_cols("gmri blue")),
+      same_limit = F) |>
+    # Spanner for the takeaway sections
+    gt::tab_spanner(
+      label = "Proportions of trips by fishing area:",
+      columns = c(`Exclusive Economic Zone (Ocean>3 mi)`, Inland, `State Territorial Seas (Ocean<=3 mi excluding Inland)`)) |>
+    gt::fmt_missing(
+      columns = gt::everything(),
+      missing_text = "") |>
+    gt::cols_label(
+      council_fraction = "Council Proportion",
+      state_full = "State") |>
+    gt::cols_align(
+      align = "center",
+      columns = "state_full") |>
+    gt::opt_vertical_padding(scale = 0.5) |>
+    gt::opt_table_font(font = list(gt::google_font(name = "Avenir"))) |>
+    gt::tab_style(
+      style = gt::cell_borders(sides = "right", style = "solid", color = "lightgray", weight = gt::px(2)),
+      locations = gt::cells_body(
+        columns = council_fraction)) |>
+    gt::tab_style(
+      style = gt::cell_borders(sides = "bottom", color = "transparent"),
+      locations = gt::cells_body(
+        columns = council_fraction)) |>
+    gt::cols_hide(duplicates)
+
+  return(out)
+
+}
