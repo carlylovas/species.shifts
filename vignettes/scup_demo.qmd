@@ -50,6 +50,7 @@ library(species.shifts)
 
 Scup, *Stenotomus chrysops*, also know as *porgy*, is a demersal fish common along the Northeast US shelf. The commercial fishery is managed by the Mid-Atlantic Fisheries Management Council in conjunction with the Atlantic States Marine Fisheries Commission. This **draft** synthesis describes the distribution of both biomass and fishing activity across six federal data sets. By exploring different indicators of biomass across this suite of information, we hope to be able to ilicit a holistic image of how the biomass is spread along the coast and if commercial and recreational fishing activity is able to match any movement. Ideally, this holistic view will empower the management councils to make any necessary amendments to their fishery management plans.
 
+# Fisheries Independent Data
 ## NEFSC Bottom Trawl
 
 ```{r}
@@ -73,6 +74,7 @@ knitr::include_graphics(here::here("images/scup/scup case study.png"))
 knitr::include_graphics(here::here("images/scup/scup latitude map.png"))
 ```
 
+# Fisheries Dependent Data
 ## Vessel Trip Reports
 
 ```{r}

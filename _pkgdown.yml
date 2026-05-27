@@ -18,7 +18,7 @@ navbar:
         - text: Visualizing federal fisheries data
           href: articles/plotting_functions.html
     summaries:
-      text: Synthesis
+      text: Summary
       menu:
         - text: Summer flounder
           href: articles/summer_flounder_demo.html
