@@ -9,7 +9,8 @@ Authors@R: c(
                     comment = c(ORCID = "0000-0003-0402-0829")),
     person("Andrew", "Allyn", role = "ctb",
                     comment = c(ORCID = "0000-0002-1584-0198")),
-    person("Gulf of Maine Research Institute", role = "fnd")
+    person("Gulf of Maine Research Institute", role = "fnd"),
+    person("Mid-Atlantic Fisheries Management Council", role = "fnd")
     )
 Author: Carly Lovas [aut, cre]
 Description: The goal of {species.shifts} is to consolidate a variety 
