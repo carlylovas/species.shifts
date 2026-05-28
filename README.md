@@ -5,8 +5,6 @@
 
 ## species.shifts: Northeast US Species Distribution Change
 
-<!-- <img src="man/figures/package_hex.svg" style="float:left; width:120px;" url = "https://fisheries.noaa.gov/> -->
-
 <!-- badges: start -->
 
 <!-- badges: end -->
