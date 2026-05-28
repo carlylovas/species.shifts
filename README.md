@@ -1,7 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## species.shifts <img src="man/figures/package_hex.svg" style="float:left; width:120px;"/>
+<img src="man/figures/logo_banner.svg" style="float:center;">
+
+## species.shifts
+
+<!-- <img src="man/figures/package_hex.svg" style="float:left; width:120px;" url = "https://fisheries.noaa.gov/> -->
 
 <!-- badges: start -->
 
