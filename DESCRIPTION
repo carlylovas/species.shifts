@@ -1,6 +1,6 @@
 Package: species.shifts
 Type: Package
-Title: Northeast US Marine Species Distribution Shifts
+Title: Northeast US Marine Species Distribution Change
 Version: 0.1.0
 Authors@R: c(
     person("Carly", "Lovas", , "carly.lovas@gmail.com", role = c("aut", "cre"),

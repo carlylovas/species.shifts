@@ -3,7 +3,7 @@
 
 <img src="man/figures/logo_banner.svg" style="float:center;">
 
-## species.shifts
+## species.shifts: Northeast US Species Distribution Change
 
 <!-- <img src="man/figures/package_hex.svg" style="float:left; width:120px;" url = "https://fisheries.noaa.gov/> -->
 
