@@ -68,6 +68,7 @@ species_list <- function(source = "all") {
     "tilefish", "atlantic croaker", "striped bass", "gray triggerfish", "spanish mackerel"
   )) |>
     dplyr::mutate(clean_name = ifelse(comname == "goosefish", "monkfish", comname),
+                  clean_name = ifelse(comname == "atlantic surfclam", "surf clam", comname),
                   data_source = "nefsc")
 
   observer <- data.frame(comname = c(
