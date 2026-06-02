@@ -82,7 +82,7 @@ You can install the development version from [GitHub](www.github.com)
 with:
 
 ``` r
-devtools::install_github("https://github.com/carlylovas/species.shifts")
+pak::pak("carlylovas/species.shifts")
 ```
 
 ## Vignettes

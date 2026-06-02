@@ -67,8 +67,9 @@ species_list <- function(source = "all") {
     "northern shortfin squid", "ocean quahog", "scup", "spiny dogfish", "summer flounder",
     "tilefish", "atlantic croaker", "striped bass", "gray triggerfish", "spanish mackerel"
   )) |>
-    dplyr::mutate(clean_name = ifelse(comname == "goosefish", "monkfish", comname),
-                  clean_name = ifelse(comname == "atlantic surfclam", "surf clam", comname),
+    dplyr::mutate(clean_name = comname,
+                  clean_name = stringr::str_replace(clean_name, "goosefish", "monkfish"),
+                  clean_name = stringr::str_replace(clean_name, "atlantic surfclam", "surf clam"),
                   data_source = "nefsc")
 
   observer <- data.frame(comname = c(

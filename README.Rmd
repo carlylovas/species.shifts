@@ -62,7 +62,7 @@ All three groups of functions will ultimately yield the materials needed to gene
 You can install the development version from [GitHub](www.github.com) with:
 
 ``` r
-devtools::install_github("https://github.com/carlylovas/species.shifts")
+pak::pak("carlylovas/species.shifts")
 ```
 
 ## Vignettes
