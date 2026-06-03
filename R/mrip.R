@@ -80,7 +80,7 @@ pull_mrip_catch <- function(proj_path){
 #' @return gtable of recreational harvest trends
 #' @import
 #' @export
-#' @example # plot_catch_trends(species = "summer flounder", data = catch)
+#' @example # not run
 #'
 plot_catch_trends <- function(species = "all", data = "NULL") {
 

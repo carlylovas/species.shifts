@@ -2,7 +2,7 @@
 % Please edit documentation in R/nefsc.R
 \name{plot_council_biomass}
 \alias{plot_council_biomass}
-\title{Council proportions of biomass}
+\title{Proportions of NEFSC-surveyed biomass}
 \usage{
 plot_council_biomass(species = "all", data = NULL)
 }

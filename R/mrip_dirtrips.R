@@ -569,7 +569,7 @@ MRIP.dirtrips <- function(intdir = NULL, common = NULL, st = NULL, styr = NULL,
 #' @return gtable of recreational directed trip trends
 #' @import
 #' @export
-#' @example # plot_trip_estimates(species = "summer flounder", data = mrip)
+#' @example # not run
 #'
 plot_trip_estimates <- function(species = "all", data = "NULL"){
 
