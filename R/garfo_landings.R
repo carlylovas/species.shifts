@@ -94,13 +94,14 @@ plot_landings_trends <- function(species = "all", data = "landings") {
   # Build plots only for relevant species
   plots <- data |>
     dplyr::rename("landings" = "land") |>
+    dplyr::rename("revenue" = "value")
     tidyr::pivot_longer(
-      cols = c(landings, value),
+      cols = c(landings, revenue),
       names_to = "metric",
       values_to = "value"
     ) |>
     dplyr::group_by(year, comname, state_full, metric) |>
-    dplyr::summarise(total = sum(value), .groups = "drop") |>
+    dplyr::summarise(total = sum(revenue), .groups = "drop") |>
     dplyr::group_by(comname) |>
     tidyr::nest() |>
     dplyr::mutate(
@@ -177,16 +178,16 @@ plot_state_landings <- function(species = "all", data = "landings") {
   plots <- data |>
     dplyr::rename("landings" = "land") |>
     tidyr::pivot_longer(
-      cols = c(landings, value),
+      cols = c(landings, revenue),
       names_to = "metric",
       values_to = "value"
     ) |>
     dplyr::group_by(year, comname, state_full, metric) |>
-    dplyr::summarise(state_value = sum(value, na.rm = T), .groups = "drop") |>
+    dplyr::summarise(state_revenue = sum(revenue, na.rm = T), .groups = "drop") |>
     dplyr::ungroup() |>
     dplyr::group_by(year, comname, metric) |>
-    dplyr::mutate(total_value = sum(state_value, na.rm = T),
-                  prop = state_value / total_value) |>
+    dplyr::mutate(total_revenue = sum(state_revenue, na.rm = T),
+                  prop = state_revenue / total_revenue) |>
     dplyr::group_by(comname) |>
     tidyr::nest() |>
     dplyr::mutate(
@@ -267,16 +268,16 @@ plot_council_landings <- function(species = "all", data = "landings") {
   plots <- data |>
     dplyr::rename("landings" = "land") |>
     tidyr::pivot_longer(
-      cols = c(landings, value),
+      cols = c(landings, revenue),
       names_to = "metric",
       values_to = "value"
     ) |>
     dplyr::group_by(year, comname, council, metric) |>
-    dplyr::summarise(council_value = sum(value, na.rm = T), .groups = "drop") |>
+    dplyr::summarise(council_revenue = sum(revenue, na.rm = T), .groups = "drop") |>
     dplyr::ungroup() |>
     dplyr::group_by(year, comname, metric) |>
-    dplyr::mutate(total_value = sum(council_value, na.rm = T),
-                  prop = council_value / total_value) |>
+    dplyr::mutate(total_revenue = sum(council_revenue, na.rm = T),
+                  prop = council_revenue / total_revenue) |>
     dplyr::group_by(comname) |>
     tidyr::nest() |>
     dplyr::mutate(

@@ -16,5 +16,5 @@ Data frame of observer data; contains both catch and haul information.
 Function to pull and clean NEFSC Spring-Fall Bottom Trawl Survey (survdat) data from pre-existing confidential repository.
 }
 \examples{
-# nefsc <- pull_nefsc(proj_path = "~Data/trawl_dat.rds")
+# nefsc <- pull_nefsc(proj_path = proj_path)
 }

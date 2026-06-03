@@ -12,7 +12,7 @@
 #' @param proj_path Local path to data file
 #' @return Data frame of observer data; contains both catch and haul information.
 #' @export
-#' @examples # nefsc <- pull_nefsc(proj_path = "~Data/trawl_dat.rds")
+#' @examples # nefsc <- pull_nefsc(proj_path = proj_path)
 
 # Load and preliminary cleaning of raw data ----
 pull_nefsc <- function(proj_path){
@@ -478,3 +478,101 @@ map_nefsc <- function(species = "all", data = NULL){
   }
 }
 
+## Biomass proportions across Councils
+#' @title Council proportions of biomass
+#'
+#' @description Function to calculate and plot the proportion of surveyed biomass in each council region
+#' @param species Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`
+#' @param data Default is "nefsc" `nefsc` must be run and named "observer" in order to run this function.
+#' @return Barplot of biomass proportions across Atlantic council management zones. Selecting `all` species will return a list.
+#' @export
+#' @examples # plot_council_biomass(species = "summer flounder", data = nefsc)
+#'
+plot_council_biomass <- function(species = "all", data = NULL){
+
+  # Get species list
+  species_list <- species.shifts::species_list(source = "nefsc")
+
+  # Base filter
+  data <- data |>
+    dplyr::right_join(species_list)
+
+  # Validate and filter early if specific species requested
+  if (species != "all") {
+    if (!species %in% data$clean_name) {
+      message("Species '", species, "' not found.")
+      return(NULL)
+    }
+    data <- data |> dplyr::filter(clean_name == species)
+  }
+
+  # Spatial goodies
+  sf::sf_use_s2(FALSE)
+
+  shp_path <- here::here("data", "shapefiles", "Council_Scopes.shp")
+
+  boundaries <- sf::st_read(shp_path, quiet = TRUE)
+  boundaries <- ggplot2::fortify(boundaries)
+
+  east_coast <- boundaries |>
+    janitor::clean_names() |>
+    dplyr::filter(council %in% c("New England", "Mid-Atlantic", "South Atlantic")) |>
+    dplyr::mutate(factor = factor(council, levels = c("New England", "Mid-Atlantic", "South Atlantic")))
+
+  sf_data <- sf::st_as_sf(data, coords = c("lon", "lat"), crs = 4326, remove = FALSE)
+
+  # Overlap with Mgmt zones
+  sf_data <- sf_data |>
+    sf::st_join(east_coast, join = sf::st_intersects)
+
+  # Calculate & plot biomass proportions
+ plots <- sf_data |>
+   sf::st_drop_geometry() |>
+   dplyr::filter(!is.na(council)) |>
+   dplyr::mutate(council = factor(council, levels = c("New England", "Mid-Atlantic", "South Atlantic"))) |>
+   dplyr::select(clean_name, year, lat, lon, total_biomass_kg, council) |>
+   dplyr::group_by(year, clean_name, council) |>
+   dplyr::summarise(biom = sum(total_biomass_kg, na.rm = T), .groups = "drop") |>
+   dplyr::group_by(year, clean_name) |>
+   dplyr::mutate(total = sum(biom, na.rm = T), .groups = "drop",
+                 prop  = (biom/total)) |>
+   dplyr::group_by(clean_name) |>
+   tidyr::nest() |>
+   dplyr::mutate(
+     out = purrr::map2(data, clean_name, function(x, y) {
+       ggplot2::ggplot(data = x) +
+         ggplot2::geom_col(
+           ggplot2::aes(x = year, y = prop, fill = council)
+         ) +
+         ggplot2::scale_fill_manual(values = c("#363b45", "#00608a","#C1DEFF")) +
+         ggplot2::guides(
+           fill = ggplot2::guide_legend(nrow = 1)
+         ) +
+         ggplot2::labs(
+           title = "Proportion of biomass by council",
+           x = "Year",
+           y = "Proportion"
+         ) +
+         ggplot2::theme(
+           text              = ggplot2::element_text(family = "Avenir", size = 13),
+           legend.title      = ggplot2::element_blank(),
+           legend.position   = "bottom",
+           strip.background  = ggplot2::element_blank(),
+           strip.text        = ggplot2::element_text(hjust = 0, face = "plain", size = 15),
+           panel.grid.major  = ggplot2::element_line(color = "#535353", linewidth = 0.1, linetype = 3),
+           panel.grid.minor  = ggplot2::element_blank(),
+           panel.background  = ggplot2::element_rect(fill = "transparent"),
+           panel.border      = ggplot2::element_rect(
+             fill      = "transparent",
+             linetype  = 1,
+             linewidth = 0.5,
+             color     = "#535353"
+           )
+         )
+     }))
+ if (species == "all") {
+   return(plots |> dplyr::select(clean_name, out))
+ } else {
+   return(plots$out[[1]])
+ }
+}
