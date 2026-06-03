@@ -192,7 +192,16 @@ plot_nefsc_edges(species = "summer flounder", data = nefsc)
 #| out-height: 400px
 knitr::include_graphics(here::here("images/summer flounder/summer flounder edges.png"))
 ```
-
+```r
+plot_council_biomass(spieces = "summer flounder", data = nefsc)
+```
+```{r}
+#| label: trawl council prop
+#| fig-align: center
+#| out-width: 500px
+#| out-height: 500px
+knitr::include_graphics(here::here("images/summer flounder/summer flounder council biomass proportion.png"))
+```
 
 ## Marine Recreational Information Program
 ### Catch estimates
