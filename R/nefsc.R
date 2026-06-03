@@ -479,7 +479,7 @@ map_nefsc <- function(species = "all", data = NULL){
 }
 
 ## Biomass proportions across Councils
-#' @title Council proportions of biomass
+#' @title Proportions of NEFSC-surveyed biomass
 #'
 #' @description Function to calculate and plot the proportion of surveyed biomass in each council region
 #' @param species Default is "all", includes Mid-Atlantic species represented in `species.shift::species_list()`
