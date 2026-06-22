@@ -2315,6 +2315,7 @@ background: #236192;
 <p><strong>How it works:</strong> The vessel trip report data was received as a ZIP folder with several CSV files, a separte file for each year of interest. This function reads these files and combines them into a single data frame. For consistency across each file, <code>vtrserno</code> is converted into a character vector, while <code>year</code>, <code>sub_trip_id</code>, <code>calc_lat_deg</code>, <code>calc_lat_min</code>, <code>calc_lat_sec</code>, <code>calc_lon_deg</code>, <code>calc_lon_min</code>, <code>calc_lon_sec</code>, and <code>calc_inshr_area</code> are all forced as numerics.</p>
 <p><code>calc_lat_deg</code>, <code>calc_lat_min</code>, <code>calc_lat_sec</code> and converted and combined to create a decimal degree measurement for latitude, and the same is done for longitude. From there, any states outside GARFO jurisdiction are removed (Texas, Alabama, etc.) and trips are filtered to the area between -60 and -80 degrees west and 20 degrees north.</p>
 <p>The data that is returned includes all that is shown above, and <code>sub_trip_id</code> as the unique trip identifier.</p>
+<hr>
 </section>
 <section id="fisheries-observer" class="level3">
 <h3 class="anchored" data-anchor-id="fisheries-observer">Fisheries Observer</h3>
@@ -2400,9 +2401,10 @@ background: #236192;
 </div>
 </div>
 <p>*Trip ID information removed from demo to maintain confidentiality.</p>
-<p><strong>How it works:</strong> The fisheries observer information was received from the **Northeast Fisheries Science Center* as a Microsoft Excel Workbook. The data spans 1989 to 2024 and contains trip, haul and catch data from that time frame. The haul data is broken up into two separate sheets within the excel workbook. Catch data is stored within individual sheets for each year of the data. All trip data is contained within one sheet.</p>
+<p><strong>How it works:</strong> The fisheries observer information was received from the <strong>Northeast Fisheries Science Center</strong> as a Microsoft Excel Workbook. The data spans 1989 to 2024 and contains trip, haul and catch data from that time frame. The haul data is broken up into two separate sheets within the excel workbook. Catch data is stored within individual sheets for each year of the data. All trip data is contained within one sheet.</p>
 <p>From the <code>readxl</code> package, <code>excel_sheets()</code> to read in the entire workbook, and map <code>read_excel()</code> to read in each sheet. The two haul data sheets are combined to create a singular data frame. Catch data from 1989-1995 are missing a year column, and so one is created from the link column in order to combine these years with subsequent years of data. Haul data and catch data are joined by the <code>link3</code> column.</p>
 <p>Because coordinates are recorded at different points depending on the type of gear used on the trip, an intermediate data set is created to capture the proper recorded coordinates to each trip. This list is then joined back to the combined catch-haul data set to ensure accurate coordinates based on trip type.</p>
+<hr>
 </section>
 <section id="nefsc-bottom-trawl" class="level3">
 <h3 class="anchored" data-anchor-id="nefsc-bottom-trawl">NEFSC Bottom Trawl</h3>
@@ -2482,10 +2484,11 @@ background: #236192;
 </table>
 </div>
 </div>
-<p><strong>How it works:</strong> The trawl data is received from the Northeast Fisheries Science Center as a .Rdata file pulled from an SQL database. <code>survdat</code> is extracting from the larger list of data and is the basis of the data used here. <code>survdat</code> is combined with a previously built species list to add the common names of survey species.</p>
+<p><strong>How it works:</strong> The trawl data is received from the <strong>Northeast Fisheries Science Center</strong> as a .Rdata file pulled from an SQL database. <code>survdat</code> is extracting from the larger list of data and is the basis of the data used here. <code>survdat</code> is combined with a previously built species list to add the common names of survey species.</p>
 <p>From there, a unique tow ID is built based on the cruise, station, and strata surveyed. A date column is added based on the estimate month and day of the survey.</p>
 <p>Observations where there is a mismatch in abundance and biomass are revised so that when biomass is 0 but abundance is greater than 0, the biomass is recorded as 0.0001 kg and when abundance is 0 but biomass is greather than 0, the abundance is recorded as 1.</p>
 <p>Strata and species not regularly sampled are then filtered out from the data, and the data subset to begin at 1970, when the trawl began to run consistently.</p>
+<hr>
 </section>
 <section id="garfo-federal-permits" class="level3">
 <h3 class="anchored" data-anchor-id="garfo-federal-permits">GARFO Federal Permits</h3>
@@ -2570,6 +2573,11 @@ background: #236192;
 </table>
 </div>
 </div>
+<p><strong>How it works:</strong> Federal permits data is received as a series of individual Excel spreadsheets, one for each year. This function is designed to read in multiple Excel files from a single source folder and combine them into one data frame.</p>
+<p>Permits are grouped by species, in that each species is represented by a single column and each permits type represented by a number, letter, or some combination of both. If an individual holds multiple permits types/endorsements, a single entry is made and those values are separated by a comma within a single cell. As such, this function breaks up each column into the respective number of permits types, and renamed with the target species name and permit type (ex: <code>black_sea_bass_1</code> and <code>black_sea_bass_2</code>). The all permit type columns are then pivoted, so that each permit application number has a corresponding permit type and value <code>1</code> for that permit.</p>
+<p>From there, the names of target species are cleaned and added as a separate column, for later species-level grouping. An additional column is added based on whether a permit type is categorized as <code>commercial</code>, <code>for-hire/charter</code> or <code>recreational</code>. Because we are interested in also accessing species-level trends, permits that cover multiple species (<code>multispecies</code> and <code>squid/mackerel/butterfish</code>) have been parsed out so that each specific permit type corresponds with it’s target species.</p>
+<p>Lastly, permits are geocoded using <code>tidygeocoder</code> to their reported principal port and grouped to their respective management council region. Roughly 1% of entries are lost due to misspelled principal ports.</p>
+<hr>
 </section>
 <section id="garfo-dealer-reported-landings" class="level3">
 <h3 class="anchored" data-anchor-id="garfo-dealer-reported-landings">GARFO Dealer-reported landings</h3>
@@ -2659,6 +2667,8 @@ background: #236192;
 </table>
 </div>
 </div>
+<p><strong>How it works:</strong> Confidential landings data was received along with the vessel trip reports as an Excel spreadsheet. The first 9 lines contained metadata as provided by <strong>GARFO</strong>. As such, this function uses <code>readxl</code> to read in the file and requires a <code>skip</code> argument to skip the first few rows that contain metadata. <code>SwimmeR</code> is used to clean the species names and <code>tidygeocoder</code> to geocode the ports associated with landings.</p>
+<hr>
 </section>
 <section id="marine-recreational-information-program" class="level3">
 <h3 class="anchored" data-anchor-id="marine-recreational-information-program">Marine Recreational Information Program</h3>
@@ -2750,6 +2760,9 @@ background: #236192;
 </table>
 </div>
 </div>
+<p><strong>How it works:</strong> The function to pull in and clean the MRIP directed trips is arguably the most complex of the data cleaning functions. The data is hosted online and is downloadable as a ZIP file for individual years. This function pulls in the zipped files, unzips them and saves them locally in intermediate files, which are required for the trip estimation code. Once the data has been pulled in and saved to the intermediary files, the trip estimates are calculated using <a href="gary.nelson@state.ma.us">Gary Nelson</a>’s <a href="https://www.fisheries.noaa.gov/recreational-fishing-data/recreational-fishing-data-downloads">MRIP directed trip estimate R template</a>. This code estimates the number of directed trips by species, wave, domain, trip type and year.</p>
+<p>For this analyses, we used all waves, primary target trip type, all states along the east coast, and calculate estimates for Atlantic croaker, Atlantic mackerel, black sea bass, blueline tilefish, bluefish, gray triggerfish, king mackerel, Spanish mackerel, striped bass, summer flounder, scup, spiny dogfish, goosefish (monkfish) and tilefish (golden tilefish).</p>
+<hr>
 </section>
 <section id="catch-estimates" class="level4">
 <h4 class="anchored" data-anchor-id="catch-estimates">Catch estimates</h4>
@@ -2869,6 +2882,8 @@ background: #236192;
 </table>
 </div>
 </div>
+<p><strong>How it works:</strong> Catch estimates are publically available on the <a href="https://safis.accsp.org/accsp_prod/f?p=1490:1:1685966511435:::::">ACCSP Data Warehouse</a> and downloaded as a CSV File. This function reads in the CSV and cleans the species names to be uniform with other data sets.</p>
+<hr>
 </section>
 </section>
 </section>

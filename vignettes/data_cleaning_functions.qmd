@@ -89,6 +89,8 @@ knitr::kable(read.csv(here::here("data","examples","vtr.csv")))
 
 The data that is returned includes all that is shown above, and `sub_trip_id` as the unique trip identifier.
 
+------------------------------------------------------------------------
+
 ### Fisheries Observer
 
 `observer <- pull_observer(proj_path = my_path)`
@@ -110,12 +112,13 @@ knitr::kable(read.csv(here::here("data","examples","obs.csv")))
 
 \*Trip ID information removed from demo to maintain confidentiality.
 
-**How it works:** The fisheries observer information was received from the **Northeast Fisheries Science Center* as a Microsoft Excel Workbook. The data spans 1989 to 2024 and contains trip, haul and catch data from that time frame. The haul data is broken up into two separate sheets within the excel workbook. Catch data is stored within individual sheets for each year of the data. All trip data is contained within one sheet. 
+**How it works:** The fisheries observer information was received from the **Northeast Fisheries Science Center** as a Microsoft Excel Workbook. The data spans 1989 to 2024 and contains trip, haul and catch data from that time frame. The haul data is broken up into two separate sheets within the excel workbook. Catch data is stored within individual sheets for each year of the data. All trip data is contained within one sheet.
 
-From the `readxl` package, `excel_sheets()` to read in the entire workbook, and map `read_excel()` to read in each sheet. The two haul data sheets are combined to create a singular data frame. Catch data from 1989-1995 are missing a year column, and so one is created from the link column in order to combine these years with subsequent years of data. Haul data and catch data are joined by the `link3` column. 
+From the `readxl` package, `excel_sheets()` to read in the entire workbook, and map `read_excel()` to read in each sheet. The two haul data sheets are combined to create a singular data frame. Catch data from 1989-1995 are missing a year column, and so one is created from the link column in order to combine these years with subsequent years of data. Haul data and catch data are joined by the `link3` column.
 
-Because coordinates are recorded at different points depending on the type of gear used on the trip, an intermediate data set is created to capture the proper recorded coordinates to each trip. This list is then joined back to the combined catch-haul data set to ensure accurate coordinates based on trip type. 
+Because coordinates are recorded at different points depending on the type of gear used on the trip, an intermediate data set is created to capture the proper recorded coordinates to each trip. This list is then joined back to the combined catch-haul data set to ensure accurate coordinates based on trip type.
 
+------------------------------------------------------------------------
 
 ### NEFSC Bottom Trawl
 
@@ -130,13 +133,15 @@ Because coordinates are recorded at different points depending on the type of ge
 knitr::kable(read.csv(here::here("data","examples","nefsc.csv")))
 ```
 
-**How it works:** The trawl data is received from the Northeast Fisheries Science Center as a .Rdata file pulled from an SQL database. `survdat` is extracting from the larger list of data and is the basis of the data used here. `survdat` is combined with a previously built species list to add the common names of survey species. 
+**How it works:** The trawl data is received from the **Northeast Fisheries Science Center** as a .Rdata file pulled from an SQL database. `survdat` is extracting from the larger list of data and is the basis of the data used here. `survdat` is combined with a previously built species list to add the common names of survey species.
 
-From there, a unique tow ID is built based on the cruise, station, and strata surveyed. A date column is added based on the estimate month and day of the survey. 
+From there, a unique tow ID is built based on the cruise, station, and strata surveyed. A date column is added based on the estimate month and day of the survey.
 
-Observations where there is a mismatch in abundance and biomass are revised so that when biomass is 0 but abundance is greater than 0, the biomass is recorded as 0.0001 kg and when abundance is 0 but biomass is greather than 0, the abundance is recorded as 1. 
+Observations where there is a mismatch in abundance and biomass are revised so that when biomass is 0 but abundance is greater than 0, the biomass is recorded as 0.0001 kg and when abundance is 0 but biomass is greather than 0, the abundance is recorded as 1.
 
 Strata and species not regularly sampled are then filtered out from the data, and the data subset to begin at 1970, when the trawl began to run consistently.
+
+------------------------------------------------------------------------
 
 ### GARFO Federal Permits
 
@@ -156,7 +161,15 @@ Strata and species not regularly sampled are then filtered out from the data, an
 knitr::kable(read.csv(here::here("data","examples","permits.csv")))
 ```
 
-**How it works:** 
+**How it works:** Federal permits data is received as a series of individual Excel spreadsheets, one for each year. This function is designed to read in multiple Excel files from a single source folder and combine them into one data frame.
+
+Permits are grouped by species, in that each species is represented by a single column and each permits type represented by a number, letter, or some combination of both. If an individual holds multiple permits types/endorsements, a single entry is made and those values are separated by a comma within a single cell. As such, this function breaks up each column into the respective number of permits types, and renamed with the target species name and permit type (ex: `black_sea_bass_1` and `black_sea_bass_2`). The all permit type columns are then pivoted, so that each permit application number has a corresponding permit type and value `1` for that permit.
+
+From there, the names of target species are cleaned and added as a separate column, for later species-level grouping. An additional column is added based on whether a permit type is categorized as `commercial`, `for-hire/charter` or `recreational`. Because we are interested in also accessing species-level trends, permits that cover multiple species (`multispecies` and `squid/mackerel/butterfish`) have been parsed out so that each specific permit type corresponds with it's target species.
+
+Lastly, permits are geocoded using `tidygeocoder` to their reported principal port and grouped to their respective management council region. Roughly 1% of entries are lost due to misspelled principal ports.
+
+------------------------------------------------------------------------
 
 ### GARFO Dealer-reported landings
 
@@ -175,6 +188,10 @@ knitr::kable(read.csv(here::here("data","examples","permits.csv")))
 knitr::kable(read.csv(here::here("data","examples","landings.csv")))
 
 ```
+
+**How it works:** Confidential landings data was received along with the vessel trip reports as an Excel spreadsheet. The first 9 lines contained metadata as provided by **GARFO**. As such, this function uses `readxl` to read in the file and requires a `skip` argument to skip the first few rows that contain metadata. `SwimmeR` is used to clean the species names and `tidygeocoder` to geocode the ports associated with landings.
+
+------------------------------------------------------------------------
 
 ### Marine Recreational Information Program
 
@@ -196,6 +213,11 @@ knitr::kable(read.csv(here::here("data","examples","landings.csv")))
 knitr::kable(read.csv(here::here("data","examples","directedtrips.csv")))
 
 ```
+**How it works:** The function to pull in and clean the MRIP directed trips is arguably the most complex of the data cleaning functions. The data is hosted online and is downloadable as a ZIP file for individual years. This function pulls in the zipped files, unzips them and saves them locally in intermediate files, which are required for the trip estimation code. Once the data has been pulled in and saved to the intermediary files, the trip estimates are calculated using [Gary Nelson](gary.nelson@state.ma.us)'s [MRIP directed trip estimate R template](https://www.fisheries.noaa.gov/recreational-fishing-data/recreational-fishing-data-downloads). This code estimates the number of directed trips by species, wave, domain, trip type and year. 
+
+For this analyses, we used all waves, primary target trip type, all states along the east coast, and calculate estimates for Atlantic croaker, Atlantic mackerel, black sea bass, blueline tilefish, bluefish, gray triggerfish, king mackerel, Spanish mackerel, striped bass, summer flounder, scup, spiny dogfish, goosefish (monkfish) and tilefish (golden tilefish). 
+
+------------------------------------------------------------------------
 
 #### Catch estimates
 
@@ -212,8 +234,11 @@ knitr::kable(read.csv(here::here("data","examples","directedtrips.csv")))
 
 knitr::kable(read.csv(here::here("data","examples","catch.csv")))
 
-
 ```
+
+**How it works:** Catch estimates are publically available on the [ACCSP Data Warehouse](https://safis.accsp.org/accsp_prod/f?p=1490:1:1685966511435:::::) and downloaded as a CSV File. This function reads in the CSV and cleans the species names to be uniform with other data sets. 
+
+------------------------------------------------------------------------
 
 ## Plotting
 
